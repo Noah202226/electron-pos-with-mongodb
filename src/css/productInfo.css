@@ -1,0 +1,39 @@
+html,
+body {
+  background-color: honeydew;
+  padding: 10px;
+}
+
+* {
+  font-family: "Courier New", Courier, monospace;
+}
+
+table {
+  padding: 10px;
+  border-collapse: collapse;
+  width: 100%;
+  background-color: chartreuse;
+}
+th,
+td {
+  border: 1px solid blueviolet;
+  text-align: center;
+  padding: 5px;
+}
+tr:nth-child(even) {
+  background-color: darkgrey;
+}
+
+.actions {
+  background-color: brown;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.actions > button {
+  padding: 8px;
+}
+.clickable {
+  color: slateblue;
+  font-weight: bold;
+}

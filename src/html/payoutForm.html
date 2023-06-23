@@ -1,0 +1,47 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Payout Form</title>
+    <style>
+      * {
+        font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+        font-size: 25px;
+      }
+      body {
+        background: radial-gradient(lime, cyan);
+      }
+      form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      form > input,
+      label {
+        padding: 10px;
+      }
+      form > button {
+        margin-top: 50px;
+        padding: 10px;
+        width: 300px;
+      }
+    </style>
+  </head>
+  <body>
+    <h3>Pay out</h3>
+    <button id="cancel">Cancel</button>
+
+    <form id="payoutForm">
+      <label>Amount of order:</label>
+      <input type="number" id="totalAmount" readonly required />
+      <label>Recieved Amount:</label>
+      <input type="number" id="recievedAmount" required />
+      <label>Amount of order:</label>
+      <input type="number" id="changeAmount" readonly required />
+      <button type="submit">Tender</button>
+    </form>
+
+    <script src="../script/payoutForm.js"></script>
+  </body>
+</html>

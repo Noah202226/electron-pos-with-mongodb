@@ -1,0 +1,159 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      body,
+      html {
+        margin: 0;
+        padding: 0;
+        font-family: "Arial Rounded MT";
+        background-color: cadetblue;
+      }
+      #title {
+        background: linear-gradient(
+          90deg,
+          rgb(126, 216, 228) 0%,
+          rgb(76, 120, 241) 35%,
+          rgb(148, 103, 206) 100%
+        );
+        margin: 5px;
+        padding: 15px;
+        height: 160px;
+      }
+
+      table {
+        margin-top: 20px;
+        padding: 10px;
+        border-collapse: collapse;
+        background-color: rgb(126, 216, 228);
+        width: 100%;
+        color: rgb(49, 86, 165);
+      }
+      th,
+      td {
+        border: 1px solid blueviolet;
+        text-align: center;
+        padding: 10px;
+        /* margin: 5px;
+        width: 100%px; */
+      }
+      tr:nth-child(even) {
+        background-color: darkgrey;
+      }
+      #dataContainer {
+        margin: 10px 5px 5px 5px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        background-color: rgb(76, 60, 170);
+        padding: 10px;
+        color: #fff;
+      }
+      #totalContainer {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        padding: 10px;
+        align-items: center;
+      }
+      #totalContainer > input {
+        text-align: center;
+        padding: 2px;
+        margin-left: 10px;
+      }
+      #totalContainer > label {
+        text-align: center;
+        padding: 2px;
+        margin-left: 10px;
+      }
+      .flex {
+        display: flex;
+        background-color: rgb(76, 120, 241);
+        padding: 20px;
+        align-items: center;
+        justify-content: space-between;
+        border-radius: 20px;
+      }
+      #dataRecordsAll {
+        background: lightsteelblue;
+        position: absolute;
+        padding: 20px;
+        top: 3%;
+        left: 76%;
+        display: flex;
+        flex-direction: column;
+        border-radius: 30px;
+        box-shadow: 10px 10px 10px rebeccapurple;
+      }
+      button {
+        padding: 10px;
+        width: 120px;
+        border: none;
+      }
+      button:hover {
+        font-weight: bolder;
+        background-color: rebeccapurple;
+        color: #fff;
+      }
+      .filterInput {
+        padding: 5px;
+        border: none;
+        width: 500px;
+      }
+    </style>
+    <title>Sales Report</title>
+  </head>
+  <body>
+    <div id="title">
+      <button id="exit">Return</button>
+      <h1>Cash Flow Report</h1>
+      <h2 id="dateTime"></h2>
+    </div>
+
+    <div id="dataRecordsAll">
+      <label>Total Value of Remaining Product</label>
+      <input type="number" id="remainingValues" readonly />
+      <label>Total Sales of All Records</label>
+      <input type="number" id="salesRecords" readonly />
+      <label>Overall</label>
+      <input type="number" id="overAllTotal" readonly />
+    </div>
+
+    <div id="dataContainer">
+      <div class="flex">
+        <em>Click reference no. to check order list in that reference</em>
+        <div class="fundNavContainer">
+          <button id="addFund">Add Fund</button>
+          <button id="getFund">Get Fund</button>
+        </div>
+      </div>
+      <h3>Filter Cash Flow</h3>
+      <div class="flex">
+        <div>
+          <label>From</label>
+          <input type="date" class="filterInput" name="begDate" id="begDate" />
+        </div>
+        <div>
+          <label>To</label>
+          <input type="date" class="filterInput" name="endDate" id="endDate" />
+        </div>
+        <button id="filterFlow">Filter</button>
+      </div>
+      <table id="salesRecordTable"></table>
+      <div id="totalContainer">
+        <label>Total Transactions</label>
+        <input type="number" id="totalDays" readonly />
+        <label>Total Amount</label>
+        <input type="number" id="totalAmount" readonly />
+        <label>Total Profit</label>
+        <input type="number" id="totalProfit" readonly />
+      </div>
+    </div>
+    <div id="orderListContainer">
+      <table id="ordersTable"></table>
+    </div>
+    <script src="../script/salesReport.js"></script>
+  </body>
+</html>

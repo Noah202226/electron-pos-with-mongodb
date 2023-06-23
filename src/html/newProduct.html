@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        background-color: cadetblue;
+        font-family: "Arial Rounded MT";
+      }
+      h2 {
+        margin: 0;
+        padding: 0;
+      }
+      .nav {
+        display: flex;
+        justify-content: space-between;
+      }
+      #newProductForm {
+        margin-top: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+      }
+      input {
+        font-size: 26px;
+        font-family: "Arial Rounded MT";
+      }
+      .intInput {
+        width: 200px;
+      }
+      .textInput {
+        padding: 20px;
+      }
+      .saveButton {
+        margin-top: 10px;
+        padding: 10px;
+        transition: 500ms opacity 1s ease-in;
+      }
+      .saveButton:hover {
+        background: khaki;
+        font-weight: bolder;
+        opacity: 0.8;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="nav">
+      <h2>New Product Form</h2>
+      <button id="returnBtn">Return</button>
+    </nav>
+
+    <form id="newProductForm">
+      <label>Barcode :</label>
+      <input type="text" id="barcode" class="textInput" required />
+      <label>Product Name:</label>
+      <input type="text" id="productName" class="textInput" required />
+      <label>Expiry Date:</label>
+      <input type="date" id="productExpiry" required />
+      <label>Stock Begin:</label>
+      <input type="number" id="startStock" class="intInput" required />
+      <label>Cost of Sale:</label>
+      <input
+        type="number"
+        id="productCos"
+        class="intInput"
+        min="0"
+        step=".01"
+        required
+      />
+      <label>Selling Price:</label>
+      <input
+        type="number"
+        id="sellingPrice"
+        class="intInput"
+        min="0"
+        step=".01"
+        required
+      />
+      <label>Stock Remaining:</label>
+      <input type="number" id="remainingStock" class="intInput" required />
+      <button type="submit" class="saveButton">Save Product</button>
+
+      <p id="txtWarn"></p>
+    </form>
+
+    <script src="../script/newProduct.js"></script>
+  </body>
+</html>

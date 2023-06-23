@@ -1,0 +1,58 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      body {
+        font-family: "Arial Rounded MT";
+      }
+      table {
+        padding: 10px;
+        border-collapse: collapse;
+        width: 100%;
+        background-color: chartreuse;
+      }
+      th,
+      td {
+        border: 1px solid blueviolet;
+        text-align: center;
+        padding: 5px;
+      }
+      tr:nth-child(even) {
+        background-color: darkgrey;
+      }
+      #productData {
+        background-color: blanchedalmond;
+        padding: 5px;
+        margin: 5px;
+        display: flex;
+        flex-direction: column;
+      }
+    </style>
+    <title>Product Flow</title>
+  </head>
+  <body>
+    <button id="exit">Exit</button>
+    <h1>Product Flow</h1>
+    <div id="productData">
+      <label>Barcode:</label>
+      <input type="text" id="barcode" />
+      <label>Product Name:</label>
+      <input type="text" id="productName" />
+      <label>Expiry:</label>
+      <input type="date" id="expiry" />
+      <label>COS:</label>
+      <input type="number" id="productCos" />
+      <label>Selling Price:</label>
+      <input type="number" id="sellingPrice" />
+      <label>Stock Remaining:</label>
+      <input type="number" id="stockRemain" readonly />
+      <input type="submit" value="Update" id="updateproductBtn" />
+    </div>
+
+    <table id="prodFlowTable"></table>
+
+    <script src="../script/productFlow.js"></script>
+  </body>
+</html>

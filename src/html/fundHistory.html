@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="../script/fundHistory.js" defer></script>
+    <style>
+      body {
+        background: palegreen;
+      }
+
+      #historyTable {
+        width: 100%;
+        border-collapse: collapse;
+        background: springgreen;
+        border: 2px solid steelblue;
+      }
+      tr,
+      td {
+        border: 1px solid blueviolet;
+        text-align: center;
+        padding: 10px;
+      }
+      .flex {
+        display: flex;
+        background-color: khaki;
+        padding: 5px;
+
+        align-items: center;
+        justify-content: space-between;
+      }
+    </style>
+    <title>Document</title>
+  </head>
+  <body>
+    <button id="closeWindow">Close</button>
+    <h1>Fund History</h1>
+
+    <div class="flex">
+      <h3>Filter Cash Flow</h3>
+      <label>From</label>
+      <input type="date" name="begDate" id="begDate" />
+      <label>To</label>
+      <input type="date" name="endDate" id="endDate" />
+      <button id="filterFlow">Filter</button>
+    </div>
+    <table id="historyTable"></table>
+  </body>
+</html>

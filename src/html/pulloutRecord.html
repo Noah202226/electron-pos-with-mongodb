@@ -1,0 +1,71 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <script src="../script/pulloutRecord.js" defer></script>
+    <style>
+      body {
+        font-family: "Arial Rounded MT";
+        background-color: tomato;
+        color: #fff;
+      }
+      .flex {
+        display: flex;
+        background-color: rgb(201, 193, 120);
+        padding: 20px;
+        align-items: center;
+        justify-content: space-between;
+        border-radius: 20px;
+      }
+      .filterInput {
+        padding: 5px;
+        border: none;
+        width: 320px;
+        font-family: "Arial Rounded MT";
+      }
+      button {
+        padding: 10px;
+        width: 120px;
+        border: none;
+        font-family: "Arial Rounded MT";
+      }
+      button:hover {
+        font-weight: bolder;
+        background-color: rebeccapurple;
+        color: #fff;
+      }
+      th,
+      td {
+        border: 1px solid blueviolet;
+        text-align: center;
+        padding: 10px;
+        /* margin: 5px;
+        width: 100%px; */
+      }
+      tr:nth-child(even) {
+        background-color: darkgrey;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Pullout Record</h1>
+    <button id="exitbtn" style="position: absolute; top: 10px; left: 85%">
+      Return
+    </button>
+    <div class="flex">
+      <div>
+        <label>From</label>
+        <input type="date" class="filterInput" name="begDate" id="begDate" />
+      </div>
+      <div>
+        <label>To</label>
+        <input type="date" class="filterInput" name="endDate" id="endDate" />
+      </div>
+      <button id="filterFlow">Filter</button>
+    </div>
+    <table id="pulloutTable"></table>
+  </body>
+</html>

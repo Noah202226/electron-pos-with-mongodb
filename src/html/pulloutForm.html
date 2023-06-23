@@ -1,0 +1,48 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      h1 {
+        padding: 0;
+        margin: 0;
+      }
+      form {
+        background-color: firebrick;
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+      }
+      form > input,
+      label {
+        padding: 10px;
+        font-size: 18px;
+      }
+      label {
+        color: goldenrod;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Pullout form</h1>
+    <button id="close">Close</button>
+
+    <form>
+      <label>Product Name:</label>
+      <input type="text" name="productid" hidden />
+      <input type="text" name="productName" readonly />
+      <label>Stock Remaining:</label>
+      <input type="number" name="stockRemain" readonly />
+      <label>Pullout Quantity:</label>
+      <input type="number" name="pulloutQty" id="pulloutQty" />
+      <label>New Stock Remain:</label>
+      <input type="number" name="newStockRemain" readonly />
+      <label>Reason to pullout:</label>
+      <textarea name="pulloutReason" cols="20" rows="5"></textarea>
+      <button>Save</button>
+    </form>
+    <script src="../script/pulloutForm.js"></script>
+  </body>
+</html>

@@ -1,0 +1,22 @@
+body {
+  background-image: linear-gradient(lime, yellow, green);
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+form > label {
+  font-size: 24px;
+  text-align: center;
+}
+form > input {
+  padding: 10px;
+  text-align: center;
+}
+form > button {
+  margin-top: 20px;
+  padding: 10px;
+  font-size: 24;
+}

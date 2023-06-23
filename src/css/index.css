@@ -1,0 +1,190 @@
+body {
+  background-image: linear-gradient(skyblue, pink, silver);
+  font-family: "Arial Rounded MT";
+}
+button {
+  font-family: "Arial Rounded MT";
+  color: darkblue;
+}
+
+#itemListBtn {
+  padding: 10px;
+}
+.mainFlex {
+  background-color: steelblue;
+  display: flex;
+  justify-content: space-around;
+  padding: 10px;
+  height: 640px;
+}
+.CustomerViewsTab {
+  padding: 5px;
+  background-color: darkblue;
+  height: 630px;
+  width: 700px;
+  color: darkblue;
+}
+.CustomerViewsTab h4 {
+  font-size: larger;
+  color: aliceblue;
+}
+
+.functionTab {
+  background-color: lightseagreen;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  margin-left: 10px;
+  height: 620px;
+  width: 700px;
+  padding: 10px;
+}
+#exitApp {
+  position: absolute;
+  left: 94%;
+  top: 1%;
+  font-size: 16px;
+  padding: 5px;
+}
+#minimizeApp {
+  position: absolute;
+  width: 50px;
+  left: 90%;
+  top: 1%;
+  font-size: 16px;
+  padding: 5px;
+}
+#minimizeApp:hover {
+  background-color: lightgreen;
+  color: navy;
+}
+
+#exitApp:hover {
+  background-color: red;
+  color: yellow;
+}
+#datetime {
+  text-align: right;
+  font-size: 30px;
+  margin: 0;
+  padding: 0;
+}
+h1 {
+  margin: 0;
+}
+h4 {
+  text-align: center;
+  margin: 0;
+}
+.salesList {
+  height: 450px;
+  background-color: khaki;
+  padding: 5px;
+  /* margin-top: 15px; */
+  overflow: auto;
+}
+.totalAmountContainer {
+  background-color: skyblue;
+  /* width: 600px; */
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+}
+.amountContainer {
+  text-align: end;
+}
+.totalAmount {
+  text-align: center;
+  font-size: large;
+  background-color: khaki;
+  border: none;
+  color: rebeccapurple;
+}
+.barcodeReader {
+  font-size: 1.5rem;
+  margin-top: 8px;
+}
+#barcode {
+  font-size: 1.5rem;
+  width: 508px;
+}
+
+#salesListTable {
+  background-color: skyblue;
+}
+.numpadsContainer {
+  background-color: rebeccapurple;
+  padding: 5px;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  margin: 10px;
+  width: 250px;
+  margin-left: 360px;
+}
+.numpadsContainer > button {
+  width: 250px;
+  height: 50px;
+}
+.numpadsContainer > div > button {
+  font-size: 30px;
+  margin: 10px;
+  width: 60px;
+}
+#qtyOfOrder,
+#qtyOfOrderLabel {
+  padding: 10px;
+  width: 250px;
+  margin-left: 360px;
+  text-align: center;
+  margin-top: -25px;
+}
+#payoutBtn {
+  padding: 10px;
+  width: 275px;
+  margin-left: 360px;
+  text-align: center;
+  margin-top: -50px;
+}
+
+.referenceContainer {
+  background-color: lightseagreen;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  justify-content: space-between;
+}
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td,
+th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+  font-size: 14px;
+}
+
+#alertText {
+  position: absolute;
+  top: 30px;
+  font-size: 26px;
+  font-weight: bold;
+}
+
+.Navigations {
+  background: linear-gradient(to left, rebeccapurple, skyblue);
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  border-radius: 15px;
+}
+.Navigations > button {
+  padding: 10px;
+  font-family: "Arial Rounded MT";
+}

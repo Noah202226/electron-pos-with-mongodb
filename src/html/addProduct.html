@@ -1,0 +1,32 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../css/addProduct.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>Add Product Form</h1>
+    <button id="exitBtn">Exit</button>
+    <form id="addForm">
+      <label>Product Reference:</label>
+      <input type="text" name="datetimeproductRef" id="productRef" readonly />
+      <label>Expiration:</label>
+      <input type="date" name="productExpiration" id="productExpiration" />
+      <label>Product Name:</label>
+      <input type="text" name="productName" id="productName" />
+      <label>Stock Beggining:</label>
+      <input type="number" name="stockBeggin" id="stockBeggin" readonly />
+      <label>Item Remaining:</label>
+      <input type="number" name="stockRemain" id="stockRemain" readonly />
+      <label>Quantity to add:</label>
+      <input type="number" name="addStock" id="addStock" />
+      <label>Total New Stock:</label>
+      <input type="number" name="totalStock" id="addQty" readonly />
+      <button type="submit">Update</button>
+    </form>
+
+    <script src="../script/addProduct.js"></script>
+  </body>
+</html>

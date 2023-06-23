@@ -1,0 +1,73 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Get fund</title>
+
+    <script src="../script/getFund.js" defer></script>
+    <style>
+      body {
+        background-image: linear-gradient(lime, pink);
+      }
+      form {
+        margin-top: 20px;
+        display: flex;
+        flex-direction: column;
+        background-color: burlywood;
+        padding: 30px;
+      }
+      form > label {
+        font-size: 26px;
+        margin-top: 20px;
+      }
+      form > input {
+        height: 50px;
+      }
+      form > button {
+        margin-top: 20px;
+        height: 50px;
+      }
+      form > button:hover {
+        background: radial-gradient(blue, lightgreen);
+        color: white;
+        font-weight: bolder;
+      }
+      #getFundHistory {
+        background: lightsteelblue;
+        border: none;
+        padding: 5px;
+      }
+      #dataRecordsAll {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Get Fund Form</h1>
+    <button id="cancel">Cancel</button>
+
+    <div id="dataRecordsAll">
+      <label>Total Value of Remaining Product</label>
+      <input type="number" id="remainingValues" readonly />
+      <label>Total Sales of All Records</label>
+      <input type="number" id="salesRecords" readonly />
+      <label>Overall</label>
+      <input type="number" id="overAllTotal" readonly />
+    </div>
+
+    <form>
+      <label>Fund Reason</label>
+      <input type="text" name="fundReason" required />
+
+      <label>Amount</label>
+      <input type="number" name="getFundAmount" required />
+
+      <button>Submit</button>
+    </form>
+
+    <center>
+      <button id="getFundHistory">Get Funds History</button>
+    </center>
+  </body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../css/index.css" />
+    <title>KAYCEEE GROCERY</title>
+  </head>
+  <body>
+    <h1>KAYCEEE GROCERY APP</h1>
+    <p id="datetime"></p>
+    <p id="User"></p>
+    <button id="minimizeApp">-</button>
+    <button id="exitApp">Exit App</button>
+
+    <p id="alertText"></p>
+    <div class="mainFlex">
+      <div class="CustomerViewsTab">
+        <div class="referenceContainer">
+          <h4>Order list</h4>
+          <label
+            >Reference No:
+            <p id="idrefNo"></p
+          ></label>
+        </div>
+        <div class="salesList">
+          <table id="salesListTable"></table>
+        </div>
+        <div class="totalAmountContainer">
+          <div class="amountContainer">
+            <label>Total Amount: </label>
+            <input
+              type="number"
+              id="totalAmount"
+              readonly
+              class="totalAmount"
+            />
+            <input type="number" id="totalProfit" hidden />
+          </div>
+          <div class="barcodeReader">
+            <label>Barcode: </label>
+            <input type="number" id="barcode" />
+          </div>
+        </div>
+      </div>
+      <div class="functionTab">
+        <button id="itemListBtn">INVENTORY MONITORING</button>
+        <button id="openDrawer">OPEN DRAWER</button>
+        <div class="numpadsContainer">
+          <button id="showProducts">Products</button>
+          <div class="online">
+            <button class="digit" id="btn9">9</button>
+            <button class="digit" id="btn8">8</button>
+            <button class="digit" id="btn7">7</button>
+          </div>
+          <div class="online">
+            <button class="digit" id="btn6">6</button>
+            <button class="digit" id="btn5">5</button>
+            <button class="digit" id="btn4">4</button>
+          </div>
+          <div class="online">
+            <button class="digit" id="btn3">3</button>
+            <button class="digit" id="btn2">2</button>
+            <button class="digit" id="btn1">1</button>
+          </div>
+          <div
+            class="online"
+            style="display: flex; justify-content: space-between"
+          >
+            <button class="digit" id="btn0">0</button>
+            <button class="clear" id="btnC">C</button>
+          </div>
+        </div>
+        <label id="qtyOfOrderLabel">Quantity of Order</label>
+        <input type="number" id="qtyOfOrder" />
+        <div class="transactionButton">
+          <button id="payoutBtn">Pay out</button>
+        </div>
+        <div class="Navigations">
+          <button id="newProductBtn">New Product</button>
+          <button id="expiredItemsBtn">Expired Items</button>
+          <button id="salesReportBtn">Sales Report</button>
+          <button id="pulloutBtn">Pullout Record</button>
+        </div>
+      </div>
+    </div>
+    <script src="../script/index.js"></script>
+  </body>
+</html>
