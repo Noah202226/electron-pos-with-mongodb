@@ -86,6 +86,15 @@ h4 {
   /* margin-top: 15px; */
   overflow: auto;
 }
+#sale-item {
+  background-color: rgb(66, 224, 137);
+  color: black;
+  cursor: pointer;
+}
+#sale-item:hover {
+  background-color: rgb(2, 112, 52);
+  color: whitesmoke;
+}
 .totalAmountContainer {
   background-color: skyblue;
   /* width: 600px; */

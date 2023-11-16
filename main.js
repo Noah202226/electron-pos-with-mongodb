@@ -171,7 +171,15 @@ ipcMain.on("show-notification", (e, args) => {
       enableRemoteModule: true,
     },
   });
+  win.data = args;
+  win.webContents.send("notification-data", "this data is from main");
   win.loadFile("./src/html/notification.html");
+
+  ipcMain.on("getting-notication-data", (e, args) => {
+    e.reply("notification-data", win.data);
+  });
+
+  console.log(win.data);
 
   setTimeout(() => {
     win.close();
@@ -429,57 +437,63 @@ app.on("ready", () => {
     const product = await Product.find({ barcode: args });
 
     console.log(product);
-    console.log(`QTY of order: ${qtyOfOrder}`);
 
-    product.map((p) => {
-      onstock = p.StockRemaining - qtyOfOrder;
-      soldOnProduct = p.sold + parseInt(qtyOfOrder);
+    if (product.length == 0) {
+      console.log("product not find!.");
+      e.reply("barcord-not-found", "barcord not found");
+    } else {
+      console.log(`QTY of order: ${qtyOfOrder}`);
 
-      const sales = {
-        productRef: refIdNo,
-        quantityOfOrder: qtyOfOrder,
-        productName: p.productName,
-        price: p.sellingPrice,
-        totalAmount: qtyOfOrder * p.sellingPrice,
-        profit: (p.sellingPrice - p.productCos) * qtyOfOrder,
-      };
-      const productFlow = {
-        productRef: p.productRef,
-        productName: p.productName,
-        status: "Sold",
-        qty: qtyOfOrder,
-        remaining: onstock,
-        date: new Date(),
-      };
+      product.map((p) => {
+        onstock = p.StockRemaining - qtyOfOrder;
+        soldOnProduct = p.sold + parseInt(qtyOfOrder);
 
-      const newProductFlow = new ProductFlow(productFlow);
-      newProductFlow
-        .save()
-        .then((data) => console.log(data))
-        .catch((e) => console.log(e));
+        const sales = {
+          productRef: refIdNo,
+          quantityOfOrder: qtyOfOrder,
+          productName: p.productName,
+          price: p.sellingPrice,
+          totalAmount: qtyOfOrder * p.sellingPrice,
+          profit: (p.sellingPrice - p.productCos) * qtyOfOrder,
+        };
+        const productFlow = {
+          productRef: p.productRef,
+          productName: p.productName,
+          status: "Sold",
+          qty: qtyOfOrder,
+          remaining: onstock,
+          date: new Date(),
+        };
 
-      const newSale = new SalesItemized(sales);
-      newSale
-        .save()
-        .then((data) => {
-          SalesItemized.find({
-            productRef: refIdNo,
-          })
-            .then((d) =>
-              mainWindow.webContents.send(
-                "updated-list-of-order",
-                JSON.stringify(d)
+        const newProductFlow = new ProductFlow(productFlow);
+        newProductFlow
+          .save()
+          .then((data) => console.log(data))
+          .catch((e) => console.log(e));
+
+        const newSale = new SalesItemized(sales);
+        newSale
+          .save()
+          .then((data) => {
+            SalesItemized.find({
+              productRef: refIdNo,
+            })
+              .then((d) =>
+                mainWindow.webContents.send(
+                  "updated-list-of-order",
+                  JSON.stringify(d)
+                )
               )
-            )
-            .catch((e) => console.log(e));
-        })
-        .catch((e) => console.log(e));
-    });
+              .catch((e) => console.log(e));
+          })
+          .catch((e) => console.log(e));
+      });
 
-    const productUpdated = await Product.findOneAndUpdate(
-      { barcode: args },
-      { $set: { StockRemaining: onstock, sold: soldOnProduct } }
-    );
+      const productUpdated = await Product.findOneAndUpdate(
+        { barcode: args },
+        { $set: { StockRemaining: onstock, sold: soldOnProduct } }
+      );
+    }
   });
   // Show windows
   ipcMain.on("show-newProduct-form", (e, args) => {

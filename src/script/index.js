@@ -6,7 +6,6 @@ const minimizeApp = document.querySelector("#minimizeApp");
 const showProducts = document.querySelector("#showProducts");
 const itemListBtn = document.querySelector("#itemListBtn");
 const pulloutBtn = document.querySelector("#pulloutBtn");
-const showNotificationBtn = document.querySelector("#showNotification");
 
 const user = document.querySelector("#User");
 const newProductBtn = document.querySelector("#newProductBtn");
@@ -33,10 +32,6 @@ barcode.addEventListener("keyup", (e) => {
     barcode.value = "";
     barcode.focus();
   }
-});
-
-showNotificationBtn.addEventListener("click", () => {
-  ipcRenderer.send("show-notification", "click");
 });
 
 const openDrawer = document.querySelector("#openDrawer");
@@ -110,9 +105,9 @@ const renderSale = () => {
                               `;
   sales.map((sale) => {
     salesListTable.innerHTML += `
-                        <tr>
+                        <tr id="sale-item">
                           <td>${sale.quantityOfOrder}</td>
-                          <td onclick="voidItem('${sale._id}','${sale.quantityOfOrder}')">${sale.productName}</td>
+                          <td ondblclick="voidItem('${sale._id}','${sale.quantityOfOrder}')">${sale.productName}</td>
                           <td>${sale.price}</td>
                           <td>${sale.totalAmount}</td>
                         </tr>
@@ -177,10 +172,10 @@ showProducts.addEventListener("click", () => {
 });
 itemListBtn.addEventListener("click", () => {
   if (sales.length != 0) {
-    alertText.innerHTML = "Finish Transaction first to view product list";
-    setTimeout(() => {
-      alertText.style.display = "none";
-    }, 3000);
+    ipcRenderer.send(
+      "show-notification",
+      "Finish Transaction first to view product list"
+    );
   } else {
     ipcRenderer.send("show-product-info-window", "get all products");
   }
@@ -249,4 +244,8 @@ ipcRenderer.on("updated-list-of-order", (e, args) => {
   const updatedOrderOfSales = JSON.parse(args);
   sales = updatedOrderOfSales;
   renderSale();
+});
+
+ipcRenderer.on("barcord-not-found", (e, args) => {
+  ipcRenderer.send("show-notification", "Barcode of product not found.");
 });
