@@ -13,14 +13,15 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "electron": "^9.4.4",
     "electron-packager": "^15.4.0"
   },
   "dependencies": {
     "dayjs": "^1.10.7",
+    "electron": "^9.4.4",
     "electron-pos-printer": "^1.2.4",
+    "exceljs": "^4.4.0",
     "mongoose": "^6.0.13",
     "print-js": "^1.6.0",
-    "uuid": "^8.3.2"
+    "uuid": "^9.0.1"
   }
 }

@@ -39,7 +39,7 @@ payoutForm.addEventListener("submit", (e) => {
   const data = [
     {
       type: "text", // 'text' | 'barCode' | 'qrCode' | 'image' | 'table
-      value: "Kaycee Grocery App",
+      value: "EDZ Convenience Store",
       style: `text-align:center;`,
       css: {
         "font-weight": "400",
@@ -109,7 +109,17 @@ payoutForm.addEventListener("submit", (e) => {
     },
     {
       type: "text",
-      value: "If you want like this program, you may call us",
+      value: "Thank you, Come again.",
+      css: {
+        "font-weight": "400",
+        "font-size": "12px",
+        "font-family": "Arial Rounded MT",
+      },
+      style: "text-align:center",
+    },
+    {
+      type: "text",
+      value: "0933-923-0301",
       css: {
         "font-weight": "400",
         "font-size": "12px",

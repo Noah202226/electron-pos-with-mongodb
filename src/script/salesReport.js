@@ -1,5 +1,5 @@
 const dayJS = require("dayjs");
-const { ipcRenderer } = require("electron");
+const { ipcRenderer, dialog } = require("electron");
 
 const dateTime = document.querySelector("#dateTime");
 const salesRecordTable = document.querySelector("#salesRecordTable");
@@ -14,10 +14,29 @@ const getFund = document.querySelector("#getFund");
 const begDate = document.querySelector("#begDate");
 const endDate = document.querySelector("#endDate");
 const filterFlow = document.querySelector("#filterFlow");
+const exportButton = document.querySelector("#exportButton");
 
 const remainingValues = document.querySelector("#remainingValues");
 const salesRecords = document.querySelector("#salesRecords");
 const overAllTotal = document.querySelector("#overAllTotal");
+
+let totalSales;
+let totalRemainingValue;
+
+exportButton.addEventListener("click", () => {
+  console.log("exporting", begDate.value);
+  // ipcRenderer.send("exporting", {
+  //   begDate: begDate.value,
+  //   endDate: endDate.value,
+  //   totalSales,
+  // });
+
+  Notification.requestPermission().then(() => {
+    new Notification("Sample Notification Title 1", {
+      body: "Sample Notification data",
+    });
+  });
+});
 
 getFund.addEventListener("click", () => {
   console.log("getting fund form");
@@ -159,9 +178,6 @@ ipcRenderer.on("sales-data", (e, args) => {
   console.log(sales);
   renderSales();
 });
-
-let totalSales;
-let totalRemainingValue;
 
 ipcRenderer.on("all-data-report", (e, args) => {
   data = JSON.parse(args);

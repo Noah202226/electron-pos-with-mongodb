@@ -7,7 +7,7 @@
     <style>
       body,
       html {
-        background-image: linear-gradient(lime, pink, silver);
+        background-image: linear-gradient(rgb(7, 138, 190), pink, silver);
         width: 98%;
         height: 98.7%;
       }
@@ -54,27 +54,54 @@
         margin-left: 20px;
         font-size: 18px;
       }
+      #exitApp:hover {
+        color: red;
+        cursor: pointer;
+      }
     </style>
     <title>Login</title>
   </head>
   <body>
     <div class="container">
       <div class="title">
-        <h2>KAYCEE GROCERY APP</h2>
-        <button id="exitApp">Quit App</button>
+        <img
+          src="../../assets/images/store.png"
+          style="width: 250px; height: 200px"
+          alt="login image"
+        />
+        <h2 style="font-family: 'Arial Rounded MT'">EDZ Convenience Store</h2>
+        <button
+          id="exitApp"
+          style="
+            font-family: 'Arial Rounded MT';
+            position: absolute;
+            top: 20px;
+            right: 20px;
+          "
+        >
+          Exit
+        </button>
       </div>
       <div class="form">
         <form id="userForm">
-          <label>Username:</label>
+          <label style="font-family: 'Arial Rounded MT'">Username:</label>
           <input type="text" id="user" required />
-          <label>Pass:</label>
+          <label style="font-family: 'Arial Rounded MT'">Pass:</label>
           <input type="password" id="pass" required />
-          <button type="submit">Login</button>
+          <button type="submit" style="font-family: 'Arial Rounded MT'">
+            Login
+          </button>
         </form>
       </div>
       <p
         id="txtWarn"
-        style="display: none; position: absolute; font-size: 26px; color: red"
+        style="
+          display: none;
+          position: absolute;
+          font-size: 26px;
+          color: red;
+          bottom: 150px;
+        "
       ></p>
     </div>
 

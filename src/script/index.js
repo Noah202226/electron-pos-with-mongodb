@@ -6,6 +6,7 @@ const minimizeApp = document.querySelector("#minimizeApp");
 const showProducts = document.querySelector("#showProducts");
 const itemListBtn = document.querySelector("#itemListBtn");
 const pulloutBtn = document.querySelector("#pulloutBtn");
+const showNotificationBtn = document.querySelector("#showNotification");
 
 const user = document.querySelector("#User");
 const newProductBtn = document.querySelector("#newProductBtn");
@@ -32,6 +33,10 @@ barcode.addEventListener("keyup", (e) => {
     barcode.value = "";
     barcode.focus();
   }
+});
+
+showNotificationBtn.addEventListener("click", () => {
+  ipcRenderer.send("show-notification", "click");
 });
 
 const openDrawer = document.querySelector("#openDrawer");
@@ -76,7 +81,7 @@ let sales;
 // fuctions
 const renderDateTime = () => {
   dateTime.innerHTML = dayJs(new Date()).format(
-    "MMMM DD YYYY dddd - hh:mm:ss a"
+    "MMMM DD YYYY dddd - hh:mm:ssA"
   );
   setTimeout("renderDateTime()", 1000);
 };

@@ -1,7 +1,16 @@
-const { app, BrowserWindow, ipcMain } = require("electron");
+const {
+  app,
+  BrowserWindow,
+  ipcMain,
+  dialog,
+  shell,
+  Notification,
+} = require("electron");
 
 const { PosPrinter } = require("electron-pos-printer");
 const dayJs = require("dayjs");
+
+const ExcelJS = require("exceljs");
 
 // Models
 const User = require("./src/models/User");
@@ -19,6 +28,155 @@ require("./mongo");
 // Global Variables
 let user;
 let orders;
+
+function createAndOpenExcelFile(beg, end, arrayofsales) {
+  const workbook = new ExcelJS.Workbook();
+  const worksheet = workbook.addWorksheet("Sales");
+
+  // Add data to specific cells
+  worksheet.getCell("A1").value = "Sales Report";
+  worksheet.getCell("B1").value = "Date";
+  worksheet.getCell("C1").value = beg;
+  worksheet.getCell("D1").value = end;
+
+  worksheet.getRow("1").fill = {
+    type: "pattern",
+    pattern: "solid",
+    fgColor: { argb: "FF91D2FF" },
+    bgColor: { argb: "FF91D2FF" },
+  };
+  worksheet.getRow("1").font = {
+    size: 14,
+  };
+
+  worksheet.getColumn("A").width = 30;
+  worksheet.getColumn("B").width = 50;
+  worksheet.getColumn("C").width = 20;
+  worksheet.getColumn("D").width = 20;
+
+  worksheet.getCell("A2").alignment = {
+    vertical: "middle",
+    horizontal: "center",
+  };
+  worksheet.getCell("B2").alignment = {
+    vertical: "middle",
+    horizontal: "center",
+  };
+  worksheet.getCell("A3").alignment = {
+    vertical: "middle",
+    horizontal: "center",
+  };
+  worksheet.getCell("B3").alignment = {
+    vertical: "middle",
+    horizontal: "center",
+  };
+  worksheet.getCell("A2").value = "Total Sales Amount:";
+  worksheet.getCell("B2").value = arrayofsales.reduce((a, b) => {
+    return a + parseFloat(b.totalAmount);
+  }, 0);
+  worksheet.getCell("B2").font = {
+    name: "Comic Sans MS",
+    family: 4,
+    size: 12,
+    underline: true,
+    bold: true,
+  };
+
+  worksheet.getCell("A3").value = "Total Profit:";
+  worksheet.getCell("B3").value = arrayofsales.reduce((a, b) => {
+    return a + parseFloat(b.profit);
+  }, 0);
+  worksheet.getCell("B3").font = {
+    name: "Comic Sans MS",
+    family: 4,
+    size: 12,
+    underline: true,
+    bold: true,
+  };
+
+  // Add headers
+  const headers = ["Reference", "Transaction Date", "Total Amount", "Profit"];
+  worksheet.addRow(headers);
+  worksheet.getRow("4").fill = {
+    type: "pattern",
+    pattern: "solid",
+    fgColor: { argb: "FFFFFF00" },
+    bgColor: { argb: "F21000FF" },
+  };
+
+  // Add data from the totalSales array
+  arrayofsales.forEach((sale) => {
+    const rowData = [
+      sale.saleRef,
+      sale.dateTransact,
+      sale.totalAmount,
+      sale.profit,
+    ];
+    worksheet.addRow(rowData);
+  });
+
+  // Set the height of specific rows (rows 1 and 2)
+  worksheet.getRow(2).height = 30;
+  worksheet.getRow(3).height = 25;
+
+  dialog
+    .showSaveDialog({
+      title: "Save Excel File",
+      defaultPath: `EDZ Sales Report - ${beg} - ${end} .xlsx`,
+      filters: [{ name: "Excel Files", extensions: ["xlsx"] }],
+    })
+    .then((result) => {
+      if (!result.canceled && result.filePath) {
+        workbook.xlsx
+          .writeFile(result.filePath)
+          .then(() => {
+            console.log("Excel file saved successfully!");
+            openExcelFile(result.filePath);
+          })
+          .catch((error) => {
+            console.error("Error saving Excel file:", error);
+          });
+      }
+    });
+}
+
+function openExcelFile(filePath) {
+  // Use Electron's shell module to open the file with the default application
+  shell
+    .openPath(filePath)
+    .then(() => {
+      console.log("Excel file opened successfully!");
+    })
+    .catch((error) => {
+      console.error("Error opening Excel file:", error);
+    });
+}
+
+ipcMain.on("exporting", (e, args) => {
+  console.log("message:", args);
+
+  createAndOpenExcelFile(args.begDate, args.endDate, args.totalSales);
+});
+
+ipcMain.on("show-notification", (e, args) => {
+  const win = new BrowserWindow({
+    frame: false,
+    modal: true,
+    width: 500,
+    height: 200,
+    webPreferences: {
+      nodeIntegration: true,
+      nativeWindowOpen: false,
+      contextIsolation: false,
+      enableRemoteModule: true,
+    },
+  });
+  win.loadFile("./src/html/notification.html");
+
+  setTimeout(() => {
+    win.close();
+  }, 3000);
+});
 
 app.on("ready", () => {
   const mainWindow = new BrowserWindow({
@@ -706,7 +864,7 @@ app.on("ready", () => {
       width: "200px", //  width of content body
       margin: "0 0 0 0", // margin of content body
       copies: 1, // Number of copies to print
-      printerName: "XP-58 (copy 1)", // printerName: string, check with webContent.getPrinters()
+      printerName: "XP-58", // printerName: string, check with webContent.getPrinters()
       timeOutPerLine: 400,
       pageSize: { height: 301000, width: 48000 }, // page size
       silent: true,
@@ -723,7 +881,7 @@ app.on("ready", () => {
       width: "200px", //  width of content body
       margin: "0 0 0 0", // margin of content body
       copies: 1, // Number of copies to print
-      printerName: "XP-58 (copy 1)", // printerName: string, check with webContent.getPrinters()
+      printerName: "XP-58", // printerName: string, check with webContent.getPrinters()
       timeOutPerLine: 400,
       pageSize: { height: 301000, width: 48000 }, // page size
       silent: true,
@@ -749,7 +907,7 @@ app.on("ready", () => {
       width: "200px", //  width of content body
       margin: "0 0 0 0", // margin of content body
       copies: 1, // Number of copies to print
-      printerName: "XP-58 (copy 1)", // printerName: string, check with webContent.getPrinters()
+      printerName: "XP-58", // printerName: string, check with webContent.getPrinters()
       timeOutPerLine: 400,
       pageSize: { height: 301000, width: 48000 }, // page size
       silent: true,

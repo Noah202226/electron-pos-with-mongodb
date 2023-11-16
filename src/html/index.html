@@ -8,9 +8,30 @@
     <title>KAYCEEE GROCERY</title>
   </head>
   <body>
-    <h1>KAYCEEE GROCERY APP</h1>
-    <p id="datetime"></p>
-    <p id="User"></p>
+    <div
+      style="
+        position: relative;
+        /* background-color: red; */
+        height: 90px;
+        top: 25px;
+      "
+    >
+      <h1
+        style="
+          font-size: 56px;
+          position: absolute;
+          color: blueviolet;
+          padding-left: 1rem;
+        "
+      >
+        EDZ Convenience Store
+      </h1>
+      <p
+        id="datetime"
+        style="font-size: 30px; position: absolute; right: 5px; top: 20px"
+      ></p>
+      <p id="User"></p>
+    </div>
     <button id="minimizeApp">-</button>
     <button id="exitApp">Exit App</button>
 
@@ -18,10 +39,15 @@
     <div class="mainFlex">
       <div class="CustomerViewsTab">
         <div class="referenceContainer">
-          <h4>Order list</h4>
+          <h2 style="text-align: center; margin-left: 20%">
+            CUSTOMER ORDER LIST
+          </h2>
           <label
             >Reference No:
-            <p id="idrefNo"></p
+            <p
+              id="idrefNo"
+              style="text-align: center; font-size: 18px; letter-spacing: 15px"
+            ></p
           ></label>
         </div>
         <div class="salesList">
@@ -79,9 +105,10 @@
         </div>
         <div class="Navigations">
           <button id="newProductBtn">New Product</button>
-          <button id="expiredItemsBtn">Expired Items</button>
+          <!-- <button id="expiredItemsBtn">Expired Items</button> -->
           <button id="salesReportBtn">Sales Report</button>
           <button id="pulloutBtn">Pullout Record</button>
+          <button id="showNotification">Notify</button>
         </div>
       </div>
     </div>
