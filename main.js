@@ -984,3 +984,17 @@ app.on("ready", () => {
     app.quit();
   });
 });
+
+ipcMain.on("show-bills-counter", (e, args) => {
+  const mainWindow = new BrowserWindow({
+    frame: true,
+    autoHideMenuBar: true,
+    webPreferences: {
+      nodeIntegration: true,
+      nativeWindowOpen: false,
+      contextIsolation: false,
+      enableRemoteModule: true,
+    },
+  });
+  mainWindow.loadFile("./src/html/billsCounter.html");
+});

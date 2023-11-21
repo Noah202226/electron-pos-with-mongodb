@@ -6,6 +6,7 @@ const minimizeApp = document.querySelector("#minimizeApp");
 const showProducts = document.querySelector("#showProducts");
 const itemListBtn = document.querySelector("#itemListBtn");
 const pulloutBtn = document.querySelector("#pulloutBtn");
+const billsCounterBtn = document.querySelector("#billsCounterBtn");
 
 const user = document.querySelector("#User");
 const newProductBtn = document.querySelector("#newProductBtn");
@@ -34,6 +35,9 @@ barcode.addEventListener("keyup", (e) => {
   }
 });
 
+billsCounterBtn.addEventListener("click", () => {
+  ipcRenderer.send("show-bills-counter", "gg");
+});
 const openDrawer = document.querySelector("#openDrawer");
 openDrawer.addEventListener("click", () => {
   const data = [

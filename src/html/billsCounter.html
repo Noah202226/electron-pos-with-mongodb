@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bills Counter</title>
+
+    <style>
+      .line {
+        width: 100%;
+
+        padding: 0.5rem;
+        text-align: right;
+        margin: 0.7rem;
+      }
+      .line > label {
+        font-size: 24px;
+        text-justify: newspaper;
+        text-align: right;
+      }
+      .line > input {
+        font-size: 24px;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Bills Counter App</h2>
+
+    <div
+      style="
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        justify-content: start;
+        text-align: right;
+        position: absolute;
+        width: 55%;
+      "
+    >
+      <div class="line">
+        <label>1000 *</label>
+        <input type="number" id="noOf1000" />
+        <label> = </label>
+        <input type="number" id="totalOf1000" />
+      </div>
+      <div class="line">
+        <label>500 *</label>
+        <input type="number" id="noOf500" />
+        <label> =</label>
+        <input type="number" id="totalOf500" />
+      </div>
+      <div class="line">
+        <label>200 *</label>
+        <input type="number" id="noOf200" />
+        <label> = </label>
+        <input type="number" id="totalOf200" />
+      </div>
+      <div class="line">
+        <label>100 *</label>
+        <input type="number" id="noOf100" />
+        <label> = </label>
+        <input type="number" id="totalOf100" />
+      </div>
+      <div class="line">
+        <label>50 *</label>
+        <input type="number" id="noOf50" />
+        <label> = </label>
+        <input type="number" id="totalOf100" />
+      </div>
+      <div class="line">
+        <label>20 *</label>
+        <input type="number" id="noOf20" />
+        <label> = </label>
+        <input type="number" id="totalOf20" />
+      </div>
+      <div class="line">
+        <label>10 *</label>
+        <input type="number" id="noOf10" />
+        <label> = </label>
+        <input type="number" id="totalOf10" />
+      </div>
+      <div class="line">
+        <label>5 *</label>
+        <input type="number" id="noOf5" />
+        <label> = </label>
+        <input type="number" id="totalOf5" />
+      </div>
+      <div class="line">
+        <label>1 *</label>
+        <input type="number" id="noOf1" />
+        <label> = </label>
+        <input type="number" id="totalOf1" />
+      </div>
+    </div>
+
+    <div>Data:</div>
+
+    <script>
+      const { ipcRenderer } = require("electron");
+    </script>
+  </body>
+</html>
