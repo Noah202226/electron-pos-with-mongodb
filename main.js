@@ -21,7 +21,6 @@ const SaleRecord = require("./src/models/salesRecord");
 const ProductFlow = require("./src/models/productFlow");
 const Pullout = require("./src/models/Pullout");
 const GetFundTransaction = require("./src/models/getFundTransaction");
-const { AggregationCursor } = require("mongoose");
 
 require("./mongo");
 

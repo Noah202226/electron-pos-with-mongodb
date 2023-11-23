@@ -9,9 +9,9 @@
       .line {
         width: 100%;
 
-        padding: 0.5rem;
+        padding: 0.4rem;
         text-align: right;
-        margin: 0.7rem;
+        margin: 0.25rem;
       }
       .line > label {
         font-size: 24px;
@@ -21,10 +21,38 @@
       .line > input {
         font-size: 24px;
       }
+
+      /* qty styling */
+      .qty {
+        background-color: red;
+        width: 100px;
+      }
+      .total {
+        background-color: cyan;
+        width: 150px;
+      }
+
+      button {
+        background-color: grey;
+        color: white;
+        font-size: 18px;
+        font-family: "Arial Rounded MT";
+        letter-spacing: 20px;
+      }
+      button:hover {
+        background-color: cadetblue;
+        color: chartreuse;
+      }
+      h1,
+      h2 {
+        font-family: "Arial Rounded MT";
+        padding: 10px;
+        margin: 0;
+      }
     </style>
   </head>
   <body>
-    <h2>Bills Counter App</h2>
+    <h1>Bills Counter App</h1>
 
     <div
       style="
@@ -34,69 +62,146 @@
         justify-content: start;
         text-align: right;
         position: absolute;
-        width: 55%;
+        width: 100%;
+        left: -55%;
       "
     >
       <div class="line">
         <label>1000 *</label>
-        <input type="number" id="noOf1000" />
+        <input type="number" id="noOf1000" class="qty" />
         <label> = </label>
-        <input type="number" id="totalOf1000" />
+        <input type="number" id="totalOf1000" class="total" />
       </div>
       <div class="line">
         <label>500 *</label>
-        <input type="number" id="noOf500" />
+        <input type="number" id="noOf500" class="qty" />
         <label> =</label>
-        <input type="number" id="totalOf500" />
+        <input type="number" id="totalOf500" class="total" />
       </div>
       <div class="line">
         <label>200 *</label>
-        <input type="number" id="noOf200" />
+        <input type="number" id="noOf200" class="qty" />
         <label> = </label>
-        <input type="number" id="totalOf200" />
+        <input type="number" id="totalOf200" class="total" />
       </div>
       <div class="line">
         <label>100 *</label>
-        <input type="number" id="noOf100" />
+        <input type="number" id="noOf100" class="qty" />
         <label> = </label>
-        <input type="number" id="totalOf100" />
+        <input type="number" id="totalOf100" class="total" />
       </div>
       <div class="line">
         <label>50 *</label>
-        <input type="number" id="noOf50" />
+        <input type="number" id="noOf50" class="qty" />
         <label> = </label>
-        <input type="number" id="totalOf100" />
+        <input type="number" id="totalOf100" class="total" />
       </div>
       <div class="line">
         <label>20 *</label>
-        <input type="number" id="noOf20" />
+        <input type="number" id="noOf20" class="qty" />
         <label> = </label>
-        <input type="number" id="totalOf20" />
+        <input type="number" id="totalOf20" class="total" />
       </div>
       <div class="line">
         <label>10 *</label>
-        <input type="number" id="noOf10" />
+        <input type="number" id="noOf10" class="qty" />
         <label> = </label>
-        <input type="number" id="totalOf10" />
+        <input type="number" id="totalOf10" class="total" />
       </div>
       <div class="line">
         <label>5 *</label>
-        <input type="number" id="noOf5" />
+        <input type="number" id="noOf5" class="qty" />
         <label> = </label>
-        <input type="number" id="totalOf5" />
+        <input type="number" id="totalOf5" class="total" />
       </div>
       <div class="line">
         <label>1 *</label>
-        <input type="number" id="noOf1" />
+        <input type="number" id="noOf1" class="qty" />
         <label> = </label>
-        <input type="number" id="totalOf1" />
+        <input type="number" id="totalOf1" class="total" />
       </div>
     </div>
 
-    <div>Data:</div>
+    <div
+      style="
+        position: absolute;
+        right: 30px;
+        background-color: cyan;
+        height: 80%;
+        width: 42%;
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      "
+    >
+      <h2>Data:</h2>
+
+      <div style="flex-grow: 1">
+        <div
+          style="
+            display: flex;
+            flex-direction: column;
+            align-items: start;
+            justify-content: space-between;
+            padding: 0.2rem;
+            width: 100%;
+          "
+        >
+          <label style="font-size: 20px">Bills for:</label>
+          <input type="text" style="width: 100%; height: 30px" />
+        </div>
+
+        <div
+          style="
+            display: flex;
+            flex-direction: column;
+            align-items: start;
+            justify-content: space-between;
+            padding: 0.2rem;
+            width: 100%;
+          "
+        >
+          <label style="font-size: 20px">Deductions:</label>
+          <input type="text" style="width: 100%; height: 30px" />
+        </div>
+      </div>
+
+      <button
+        id="printBtn"
+        style="
+          width: 100%;
+          /* outline: none;
+          border: none; */
+          padding: 0.5rem;
+          cursor: pointer;
+        "
+      >
+        PRINT NOW
+      </button>
+    </div>
 
     <script>
       const { ipcRenderer } = require("electron");
+
+      const printBtn = document.getElementById("printBtn");
+
+      const noOf1 = document.getElementById("noOf1");
+      const totalOf1 = document.getElementById("totalOf1");
+
+      noOf1.addEventListener("change", (e) => {
+        totalOf1.value = noOf1.value * 1;
+      });
+
+      printBtn.addEventListener("click", () => {
+        printBtn.innerHTML = "Printing";
+        printBtn.disabled = true;
+
+        setTimeout(() => {
+          printBtn.innerHTML = "PRINT NOW";
+          printBtn.disabled = false;
+        }, 3000);
+      });
     </script>
   </body>
 </html>

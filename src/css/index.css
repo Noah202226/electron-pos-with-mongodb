@@ -35,7 +35,7 @@ button {
   flex-direction: column;
   justify-content: space-around;
   margin-left: 10px;
-  height: 610px;
+  height: 100%;
   width: 700px;
   padding: 8px;
 }
