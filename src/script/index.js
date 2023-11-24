@@ -43,20 +43,20 @@ openDrawer.addEventListener("click", () => {
   const data = [
     {
       type: "text", // 'text' | 'barCode' | 'qrCode' | 'image' | 'table
-      value: "Kaycee Grocery App",
+      value: "EDZ Convenience Store",
       style: `text-align:center;`,
       css: { "font-weight": "400", "font-size": "18px" },
     },
     {
       type: "text",
       value: "------------------------------------------",
-      css: { "font-family": "Arial Rounded MT", "font-size": "12px" },
+      css: { "font-family": "Arial Rounded MT", "font-size": "16px" },
     },
     {
       type: "text", // 'text' | 'barCode' | 'qrCode' | 'image' | 'table
       value: "OPEN DRAWER",
       style: `text-align:center;`,
-      css: { "font-weight": "400", "font-size": "20px" },
+      css: { "font-weight": "400", "font-size": "14px" },
     },
   ];
 
