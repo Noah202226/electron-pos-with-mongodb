@@ -24,7 +24,7 @@
 
       /* qty styling */
       .qty {
-        background-color: red;
+        background-color: rgb(50, 250, 190);
         width: 100px;
       }
       .total {
@@ -68,55 +68,55 @@
     >
       <div class="line">
         <label>1000 *</label>
-        <input type="number" id="noOf1000" class="qty" />
+        <input type="number" id="noOf1000" class="qty inputs" />
         <label> = </label>
         <input type="number" id="totalOf1000" class="total" />
       </div>
       <div class="line">
         <label>500 *</label>
-        <input type="number" id="noOf500" class="qty" />
+        <input type="number" id="noOf500" class="qty inputs" />
         <label> =</label>
         <input type="number" id="totalOf500" class="total" />
       </div>
       <div class="line">
         <label>200 *</label>
-        <input type="number" id="noOf200" class="qty" />
+        <input type="number" id="noOf200" class="qty inputs" />
         <label> = </label>
         <input type="number" id="totalOf200" class="total" />
       </div>
       <div class="line">
         <label>100 *</label>
-        <input type="number" id="noOf100" class="qty" />
+        <input type="number" id="noOf100" class="qty inputs" />
         <label> = </label>
         <input type="number" id="totalOf100" class="total" />
       </div>
       <div class="line">
         <label>50 *</label>
-        <input type="number" id="noOf50" class="qty" />
+        <input type="number" id="noOf50" class="qty inputs" />
         <label> = </label>
-        <input type="number" id="totalOf100" class="total" />
+        <input type="number" id="totalOf50" class="total" />
       </div>
       <div class="line">
         <label>20 *</label>
-        <input type="number" id="noOf20" class="qty" />
+        <input type="number" id="noOf20" class="qty inputs" />
         <label> = </label>
         <input type="number" id="totalOf20" class="total" />
       </div>
       <div class="line">
         <label>10 *</label>
-        <input type="number" id="noOf10" class="qty" />
+        <input type="number" id="noOf10" class="qty inputs" />
         <label> = </label>
         <input type="number" id="totalOf10" class="total" />
       </div>
       <div class="line">
         <label>5 *</label>
-        <input type="number" id="noOf5" class="qty" />
+        <input type="number" id="noOf5" class="qty inputs" />
         <label> = </label>
         <input type="number" id="totalOf5" class="total" />
       </div>
       <div class="line">
         <label>1 *</label>
-        <input type="number" id="noOf1" class="qty" />
+        <input type="number" id="noOf1" class="qty inputs" />
         <label> = </label>
         <input type="number" id="totalOf1" class="total" />
       </div>
@@ -149,7 +149,7 @@
           "
         >
           <label style="font-size: 20px">Bills for:</label>
-          <input type="text" style="width: 100%; height: 30px" />
+          <input type="text" id="billsFor" style="width: 100%; height: 30px" />
         </div>
 
         <div
@@ -163,7 +163,29 @@
           "
         >
           <label style="font-size: 20px">Deductions:</label>
-          <input type="text" style="width: 100%; height: 30px" />
+          <input
+            type="text"
+            id="deductionFor"
+            style="width: 100%; height: 30px"
+          />
+        </div>
+
+        <div
+          style="
+            display: flex;
+            flex-direction: column;
+            align-items: start;
+            justify-content: space-between;
+            padding: 0.2rem;
+            width: 100%;
+          "
+        >
+          <label style="font-size: 20px">Total:</label>
+          <input
+            type="text"
+            id="totalCounts"
+            style="width: 100%; height: 30px"
+          />
         </div>
       </div>
 
@@ -183,19 +205,215 @@
 
     <script>
       const { ipcRenderer } = require("electron");
+      const dayjs = require("dayjs");
+
+      const billsFor = document.querySelector("#billsFor");
+      const deductionFor = document.querySelector("#deductionFor");
 
       const printBtn = document.getElementById("printBtn");
 
       const noOf1 = document.getElementById("noOf1");
       const totalOf1 = document.getElementById("totalOf1");
 
+      const noOf5 = document.getElementById("noOf5");
+      const totalOf5 = document.getElementById("totalOf5");
+
+      const noOf10 = document.getElementById("noOf10");
+      const totalOf10 = document.getElementById("totalOf10");
+
+      const noOf20 = document.getElementById("noOf20");
+      const totalOf20 = document.getElementById("totalOf20");
+
+      const noOf50 = document.getElementById("noOf50");
+      const totalOf50 = document.getElementById("totalOf50");
+
+      const noOf100 = document.getElementById("noOf100");
+      const totalOf100 = document.getElementById("totalOf100");
+
+      const noOf200 = document.getElementById("noOf200");
+      const totalOf200 = document.getElementById("totalOf200");
+
+      const noOf500 = document.getElementById("noOf500");
+      const totalOf500 = document.getElementById("totalOf500");
+
+      const noOf1000 = document.getElementById("noOf1000");
+      const totalOf1000 = document.getElementById("totalOf1000");
+
+      const totalCounts = document.querySelector("#totalCounts");
+      // all inputs
+      const totalInputs = document.querySelectorAll(".inputs");
+      // all total
+      const totalAmounts = document.querySelectorAll(".total");
+
+      totalAmounts.forEach((total) => {
+        total.disabled = true;
+        total.value = parseInt(0);
+      });
+      totalInputs.forEach((input) => {
+        input.value = parseInt(0);
+      });
+
+      const calculateAll = () => {
+        totalCounts.value =
+          parseInt(totalOf1000.value) +
+          parseInt(totalOf500.value) +
+          parseInt(totalOf200.value) +
+          parseInt(totalOf100.value) +
+          parseInt(totalOf50.value) +
+          parseInt(totalOf20.value) +
+          parseInt(totalOf10.value) +
+          parseInt(totalOf5.value) +
+          parseInt(totalOf1.value);
+      };
+
       noOf1.addEventListener("change", (e) => {
         totalOf1.value = noOf1.value * 1;
+        calculateAll();
+      });
+      noOf5.addEventListener("change", (e) => {
+        totalOf5.value = noOf5.value * 5;
+        calculateAll();
+      });
+      noOf10.addEventListener("change", (e) => {
+        totalOf10.value = noOf10.value * 10;
+        calculateAll();
+      });
+      noOf20.addEventListener("change", (e) => {
+        totalOf20.value = noOf20.value * 20;
+        calculateAll();
+      });
+      noOf50.addEventListener("change", (e) => {
+        totalOf50.value = noOf50.value * 50;
+        calculateAll();
+      });
+      noOf100.addEventListener("change", (e) => {
+        totalOf100.value = noOf100.value * 100;
+        calculateAll();
+      });
+      noOf200.addEventListener("change", (e) => {
+        totalOf200.value = noOf200.value * 200;
+        calculateAll();
+      });
+      noOf500.addEventListener("change", (e) => {
+        totalOf500.value = noOf500.value * 500;
+        calculateAll();
+      });
+      noOf1000.addEventListener("change", (e) => {
+        totalOf1000.value = noOf1000.value * 1000;
+        calculateAll();
       });
 
       printBtn.addEventListener("click", () => {
         printBtn.innerHTML = "Printing";
         printBtn.disabled = true;
+
+        // Electron printer
+        const data = [
+          {
+            type: "text", // 'text' | 'barCode' | 'qrCode' | 'image' | 'table
+            value: "EDZ Convenience Store",
+            style: `text-align:center;`,
+            css: {
+              "font-weight": "400",
+              "font-size": "14px",
+              "font-family": "Arial Rounded MT",
+            },
+          },
+          {
+            type: "text",
+            value: "------------------------------------------",
+            css: { "font-family": "Arial Rounded MT", "font-size": "12px" },
+          },
+          {
+            type: "text",
+            style: `text-align:center;`,
+            value: `Bills Counter`,
+            css: { "font-family": "Arial Rounded MT", "font-size": "12px" },
+          },
+
+          {
+            type: "text",
+            value: dayjs(new Date()).format("MMMM DD YYYY dddd - hh:mm:ss:a"),
+            style: "text-align: center",
+            css: { "font-family": "Arial Rounded MT", "font-size": "12px" },
+          },
+          {
+            type: "text",
+            value: "------------------------------------------",
+            css: { "font-family": "Arial Rounded MT", "font-size": "12px" },
+          },
+          {
+            type: "text",
+            value: `Bills for: ${billsFor.value}`,
+            css: { "font-family": "Arial Rounded MT", "font-size": "12px" },
+          },
+          // {
+          //   type: "text",
+          //   value: `Deduction for: ${deductionFor.value}`,
+          //   css: { "font-family": "Arial Rounded MT", "font-size": "12px" },
+          // },
+          {
+            type: "text",
+            value: `${noOf1000.value} of 1000 = ${totalOf1000.value}`,
+            css: { "font-family": "Arial Rounded MT", "font-size": "12px" },
+          },
+          {
+            type: "text",
+            value: `${noOf500.value} of 500 = ${totalOf500.value}`,
+            css: { "font-family": "Arial Rounded MT", "font-size": "12px" },
+          },
+          {
+            type: "text",
+            value: `${noOf200.value} of 200 = ${totalOf200.value}`,
+            css: { "font-family": "Arial Rounded MT", "font-size": "12px" },
+          },
+          {
+            type: "text",
+            value: `${noOf100.value} of 100 = ${totalOf100.value}`,
+            css: { "font-family": "Arial Rounded MT", "font-size": "12px" },
+          },
+          {
+            type: "text",
+            value: `${noOf50.value} of 50 = ${totalOf50.value}`,
+            css: { "font-family": "Arial Rounded MT", "font-size": "12px" },
+          },
+          {
+            type: "text",
+            value: `${noOf20.value} of 20 = ${totalOf20.value}`,
+            css: { "font-family": "Arial Rounded MT", "font-size": "12px" },
+          },
+          {
+            type: "text",
+            value: `${noOf10.value} of 10 = ${totalOf10.value}`,
+            css: { "font-family": "Arial Rounded MT", "font-size": "12px" },
+          },
+          {
+            type: "text",
+            value: `${noOf5.value} of 5 = ${totalOf5.value}`,
+            css: { "font-family": "Arial Rounded MT", "font-size": "12px" },
+          },
+          {
+            type: "text",
+            value: `${noOf1.value} of 1 = ${totalOf1.value}`,
+            css: { "font-family": "Arial Rounded MT", "font-size": "12px" },
+          },
+          {
+            type: "text",
+            value: `-`,
+            css: { "font-family": "Arial Rounded MT", "font-size": "12px" },
+          },
+          {
+            type: "text",
+            value: `TOTAL AMOUNT  : ${totalCounts.value}`,
+            css: {
+              "font-family": "Arial Rounded MT",
+              "font-size": "12px",
+              "font-weight": "bold",
+            },
+          },
+        ];
+
+        ipcRenderer.send("print-bills", JSON.stringify(data));
 
         setTimeout(() => {
           printBtn.innerHTML = "PRINT NOW";

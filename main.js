@@ -930,6 +930,24 @@ app.on("ready", () => {
       .then(() => {})
       .catch((e) => console.log(e));
   });
+  // Electron pos print
+  ipcMain.on("print-bills", (e, args) => {
+    const data = JSON.parse(args);
+    const options = {
+      preview: false, // Preview in window or print
+      width: "200px", //  width of content body
+      margin: "0 0 0 0", // margin of content body
+      copies: 1, // Number of copies to print
+      printerName: "XP-58", // printerName: string, check with webContent.getPrinters()
+      timeOutPerLine: 400,
+      pageSize: { height: 301000, width: 48000 }, // page size
+      silent: true,
+    };
+    console.log("printing bills counter...");
+    PosPrinter.print(data, options)
+      .then(() => {})
+      .catch((e) => console.log(e));
+  });
 
   ipcMain.on("get-ref-no", (e, args) => {
     e.reply("ref-no", refIdNo);
