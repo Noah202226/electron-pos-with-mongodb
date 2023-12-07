@@ -45,18 +45,22 @@ openDrawer.addEventListener("click", () => {
       type: "text", // 'text' | 'barCode' | 'qrCode' | 'image' | 'table
       value: "EDZ Convenience Store",
       style: `text-align:center;`,
-      css: { "font-weight": "400", "font-size": "18px" },
+      css: {
+        "font-family": "Arial Rounded MT",
+        "font-weight": "600",
+        "font-size": "24px",
+      },
     },
     {
       type: "text",
-      value: "------------------------------------------",
+      value: "---------------------",
       css: { "font-family": "Arial Rounded MT", "font-size": "16px" },
     },
     {
       type: "text", // 'text' | 'barCode' | 'qrCode' | 'image' | 'table
       value: "OPEN DRAWER",
       style: `text-align:center;`,
-      css: { "font-weight": "400", "font-size": "14px" },
+      css: { "font-weight": "900", "font-size": "26px" },
     },
   ];
 

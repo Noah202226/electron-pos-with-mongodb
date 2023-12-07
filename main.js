@@ -877,7 +877,7 @@ app.on("ready", () => {
       width: "200px", //  width of content body
       margin: "0 0 0 0", // margin of content body
       copies: 1, // Number of copies to print
-      printerName: "XP-58", // printerName: string, check with webContent.getPrinters()
+      printerName: "POS58 Printer", // printerName: string, check with webContent.getPrinters()
       timeOutPerLine: 400,
       pageSize: { height: 301000, width: 48000 }, // page size
       silent: true,
@@ -891,13 +891,13 @@ app.on("ready", () => {
     const data = JSON.parse(args);
     const options = {
       preview: false, // Preview in window or print
-      width: "200px", //  width of content body
-      margin: "0 0 0 0", // margin of content body
+      width: "250px", //  width of content body
+      margin: "-10 0 0 0", // margin of content body
       copies: 1, // Number of copies to print
-      printerName: "XP-58", // printerName: string, check with webContent.getPrinters()
+      printerName: "POS58 Printer", // printerName: string, check with webContent.getPrinters()
       timeOutPerLine: 400,
-      pageSize: { height: 301000, width: 48000 }, // page size
-      silent: true,
+      pageSize: { height: 301000, width: 71000 }, // page size
+      silent: false,
     };
     console.log("printing ...");
     PosPrinter.print(data, options)
@@ -920,7 +920,7 @@ app.on("ready", () => {
       width: "200px", //  width of content body
       margin: "0 0 0 0", // margin of content body
       copies: 1, // Number of copies to print
-      printerName: "XP-58", // printerName: string, check with webContent.getPrinters()
+      printerName: "POS58 Printer", // printerName: string, check with webContent.getPrinters()
       timeOutPerLine: 400,
       pageSize: { height: 301000, width: 48000 }, // page size
       silent: true,
@@ -938,7 +938,7 @@ app.on("ready", () => {
       width: "200px", //  width of content body
       margin: "0 0 0 0", // margin of content body
       copies: 1, // Number of copies to print
-      printerName: "XP-58", // printerName: string, check with webContent.getPrinters()
+      printerName: "POS58 Printer", // printerName: string, check with webContent.getPrinters()
       timeOutPerLine: 400,
       pageSize: { height: 301000, width: 48000 }, // page size
       silent: true,
