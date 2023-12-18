@@ -1,11 +1,4 @@
-const {
-  app,
-  BrowserWindow,
-  ipcMain,
-  dialog,
-  shell,
-  Notification,
-} = require("electron");
+const { app, BrowserWindow, ipcMain, dialog, shell } = require("electron");
 
 const { PosPrinter } = require("electron-pos-printer");
 const dayJs = require("dayjs");
@@ -208,6 +201,8 @@ app.on("ready", () => {
     modal: true,
     parent: mainWindow,
   });
+
+  console.log(mainWindow.webContents.getPrinters());
 
   mainWindow.loadFile("./src/html/index.html");
   loginWindow.loadFile("./src/html/login.html");
@@ -894,10 +889,10 @@ app.on("ready", () => {
       width: "250px", //  width of content body
       margin: "-10 0 0 0", // margin of content body
       copies: 1, // Number of copies to print
-      printerName: "POS58 Printer", // printerName: string, check with webContent.getPrinters()
+      printerName: "POS-58", // printerName: string, check with webContent.getPrinters()
       timeOutPerLine: 400,
       pageSize: { height: 301000, width: 71000 }, // page size
-      silent: false,
+      silent: true,
     };
     console.log("printing ...");
     PosPrinter.print(data, options)
