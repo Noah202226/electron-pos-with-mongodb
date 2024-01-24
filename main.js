@@ -35,10 +35,10 @@ function createAndOpenExcelFile(beg, end, arrayofsales) {
     type: "pattern",
     pattern: "solid",
     fgColor: { argb: "FF91D2FF" },
-    bgColor: { argb: "FF91D2FF" },
+    bgColor: { argb: "FF91D2FF" }
   };
   worksheet.getRow("1").font = {
-    size: 14,
+    size: 14
   };
 
   worksheet.getColumn("A").width = 30;
@@ -48,19 +48,19 @@ function createAndOpenExcelFile(beg, end, arrayofsales) {
 
   worksheet.getCell("A2").alignment = {
     vertical: "middle",
-    horizontal: "center",
+    horizontal: "center"
   };
   worksheet.getCell("B2").alignment = {
     vertical: "middle",
-    horizontal: "center",
+    horizontal: "center"
   };
   worksheet.getCell("A3").alignment = {
     vertical: "middle",
-    horizontal: "center",
+    horizontal: "center"
   };
   worksheet.getCell("B3").alignment = {
     vertical: "middle",
-    horizontal: "center",
+    horizontal: "center"
   };
   worksheet.getCell("A2").value = "Total Sales Amount:";
   worksheet.getCell("B2").value = arrayofsales.reduce((a, b) => {
@@ -71,7 +71,7 @@ function createAndOpenExcelFile(beg, end, arrayofsales) {
     family: 4,
     size: 12,
     underline: true,
-    bold: true,
+    bold: true
   };
 
   worksheet.getCell("A3").value = "Total Profit:";
@@ -83,7 +83,7 @@ function createAndOpenExcelFile(beg, end, arrayofsales) {
     family: 4,
     size: 12,
     underline: true,
-    bold: true,
+    bold: true
   };
 
   // Add headers
@@ -93,7 +93,7 @@ function createAndOpenExcelFile(beg, end, arrayofsales) {
     type: "pattern",
     pattern: "solid",
     fgColor: { argb: "FFFFFF00" },
-    bgColor: { argb: "F21000FF" },
+    bgColor: { argb: "F21000FF" }
   };
 
   // Add data from the totalSales array
@@ -102,7 +102,7 @@ function createAndOpenExcelFile(beg, end, arrayofsales) {
       sale.saleRef,
       sale.dateTransact,
       sale.totalAmount,
-      sale.profit,
+      sale.profit
     ];
     worksheet.addRow(rowData);
   });
@@ -115,7 +115,7 @@ function createAndOpenExcelFile(beg, end, arrayofsales) {
     .showSaveDialog({
       title: "Save Excel File",
       defaultPath: `EDZ Sales Report - ${beg} - ${end} .xlsx`,
-      filters: [{ name: "Excel Files", extensions: ["xlsx"] }],
+      filters: [{ name: "Excel Files", extensions: ["xlsx"] }]
     })
     .then((result) => {
       if (!result.canceled && result.filePath) {
@@ -160,8 +160,8 @@ ipcMain.on("show-notification", (e, args) => {
       nodeIntegration: true,
       nativeWindowOpen: false,
       contextIsolation: false,
-      enableRemoteModule: true,
-    },
+      enableRemoteModule: true
+    }
   });
   win.data = args;
   win.webContents.send("notification-data", "this data is from main");
@@ -186,8 +186,8 @@ app.on("ready", () => {
       nodeIntegration: true,
       nativeWindowOpen: false,
       contextIsolation: false,
-      enableRemoteModule: true,
-    },
+      enableRemoteModule: true
+    }
   });
   const loginWindow = new BrowserWindow({
     fullscreen: true,
@@ -196,10 +196,10 @@ app.on("ready", () => {
       nodeIntegration: true,
       nativeWindowOpen: false,
       contextIsolation: false,
-      enableRemoteModule: true,
+      enableRemoteModule: true
     },
     modal: true,
-    parent: mainWindow,
+    parent: mainWindow
   });
 
   console.log(mainWindow.webContents.getPrinters());
@@ -218,8 +218,8 @@ app.on("ready", () => {
         nodeIntegration: true,
         nativeWindowOpen: false,
         contextIsolation: false,
-        enableRemoteModule: true,
-      },
+        enableRemoteModule: true
+      }
     });
     win.loadFile("./src/html/newProduct.html");
   };
@@ -234,8 +234,8 @@ app.on("ready", () => {
         nodeIntegration: true,
         nativeWindowOpen: false,
         contextIsolation: false,
-        enableRemoteModule: true,
-      },
+        enableRemoteModule: true
+      }
     });
     win.loadFile("./src/html/productsList.html");
   };
@@ -249,8 +249,8 @@ app.on("ready", () => {
         nodeIntegration: true,
         nativeWindowOpen: false,
         contextIsolation: false,
-        enableRemoteModule: true,
-      },
+        enableRemoteModule: true
+      }
     });
     productInfo.loadFile("./src/html/productInfo.html");
   };
@@ -265,8 +265,8 @@ app.on("ready", () => {
         nodeIntegration: true,
         nativeWindowOpen: false,
         contextIsolation: false,
-        enableRemoteModule: true,
-      },
+        enableRemoteModule: true
+      }
     });
     win.loadFile("./src/html/payoutForm.html");
   };
@@ -280,8 +280,8 @@ app.on("ready", () => {
         nodeIntegration: true,
         nativeWindowOpen: false,
         contextIsolation: false,
-        enableRemoteModule: true,
-      },
+        enableRemoteModule: true
+      }
     });
     win.loadFile("./src/html/salesReport.html");
   };
@@ -296,8 +296,8 @@ app.on("ready", () => {
         nodeIntegration: true,
         nativeWindowOpen: false,
         contextIsolation: false,
-        enableRemoteModule: true,
-      },
+        enableRemoteModule: true
+      }
     });
     win.loadFile("./src/html/addProduct.html");
   };
@@ -312,8 +312,8 @@ app.on("ready", () => {
         nodeIntegration: true,
         nativeWindowOpen: false,
         contextIsolation: false,
-        enableRemoteModule: true,
-      },
+        enableRemoteModule: true
+      }
     });
     win.loadFile("./src/html/productFlow.html");
   };
@@ -328,8 +328,8 @@ app.on("ready", () => {
         nodeIntegration: true,
         nativeWindowOpen: false,
         contextIsolation: false,
-        enableRemoteModule: true,
-      },
+        enableRemoteModule: true
+      }
     });
     win.loadFile("./src/html/pulloutForm.html");
   };
@@ -366,78 +366,78 @@ app.on("ready", () => {
   });
   ipcMain.on("search-product", async (e, args) => {
     const data = await Product.find({
-      productName: { $regex: args, $options: "i" },
+      productName: { $regex: args, $options: "i" }
     });
     e.reply("filtered-products", JSON.stringify(data));
   });
+
+  // new punch product goes here.
   ipcMain.on("find-product", async (e, args) => {
     const product = await Product.find({ _id: args });
 
-    product.map((p) => {
-      onstock = p.StockRemaining - qtyOfOrder;
-      soldOnProduct = p.sold + parseInt(qtyOfOrder);
+    console.log(`QTY of order: ${qtyOfOrder}`);
+    console.log(`Sales itemized ref id: ${refIdNo}`);
 
-      const sales = {
-        productRef: refIdNo,
-        quantityOfOrder: qtyOfOrder,
-        productName: p.productName,
-        price: p.sellingPrice,
-        totalAmount: qtyOfOrder * p.sellingPrice,
-        profit: (p.sellingPrice - p.productCos) * qtyOfOrder,
-      };
-      const productFlow = {
-        productRef: p.productRef,
-        productName: p.productName,
-        status: "Sold",
-        qty: qtyOfOrder,
-        remaining: onstock,
-        date: new Date(),
-      };
-
-      const newProductFlow = new ProductFlow(productFlow);
-      newProductFlow
-        .save()
-        .then((data) => console.log(data))
-        .catch((e) => console.log(e));
-
-      const newSale = new SalesItemized(sales);
-      newSale
-        .save()
-        .then((data) => {
-          SalesItemized.find({
-            productRef: refIdNo,
-          })
-            .then((d) =>
-              mainWindow.webContents.send(
-                "updated-list-of-order",
-                JSON.stringify(d)
-              )
-            )
-            .catch((e) => console.log(e));
-        })
-        .catch((e) => console.log(e));
+    const findedProduct = await SalesItemized.findOne({
+      productRef: refIdNo
     });
 
-    const productUpdated = await Product.findOneAndUpdate(
-      { _id: args },
-      { $set: { StockRemaining: onstock, sold: soldOnProduct } }
-    );
-  });
+    if (findedProduct) {
+      console.log("product find on current sales" + findedProduct);
 
-  ipcMain.on("send-qty-of-order", (e, args) => {
-    qtyOfOrder = args;
-  });
-  ipcMain.on("find-barcode", async (e, args) => {
-    const product = await Product.find({ barcode: args });
+      // add new flow
+      product.map(async (p) => {
+        onstock = p.StockRemaining - qtyOfOrder;
 
-    console.log(product);
+        const productFlow = {
+          productRef: p.productRef,
+          productName: p.productName,
+          status: "Update sales itemized quantity and Sold",
+          qty: qtyOfOrder,
+          remaining: onstock,
+          date: new Date()
+        };
 
-    if (product.length == 0) {
-      console.log("product not find!.");
-      e.reply("barcord-not-found", "barcord not found");
+        const newProductFlow = new ProductFlow(productFlow);
+        newProductFlow
+          .save()
+          .then((data) => console.log(data))
+          .catch((e) => console.log(e));
+
+        const newQuantity =
+          parseInt(findedProduct.quantityOfOrder) + parseInt(qtyOfOrder);
+        console.log(newQuantity);
+
+        await SalesItemized.findOneAndUpdate(
+          { productRef: refIdNo },
+          {
+            quantityOfOrder: newQuantity,
+            totalAmount: parseInt(newQuantity) * parseInt(findedProduct.price)
+          }
+        );
+        console.log("sales itemized is now updated");
+        SalesItemized.find({
+          productRef: refIdNo
+        })
+          .then((d) =>
+            mainWindow.webContents.send(
+              "updated-list-of-order",
+              JSON.stringify(d)
+            )
+          )
+          .catch((e) => console.log(e));
+      });
+      await Product.findOneAndUpdate(
+        { _id: args },
+        { $set: { StockRemaining: onstock, sold: soldOnProduct } }
+      )
+        .then(() => {
+          console.log("product updated on new quantity in list");
+        })
+        .catch((error) => {
+          console.log("Error updating product on list", error);
+        });
     } else {
-      console.log(`QTY of order: ${qtyOfOrder}`);
-
       product.map((p) => {
         onstock = p.StockRemaining - qtyOfOrder;
         soldOnProduct = p.sold + parseInt(qtyOfOrder);
@@ -448,7 +448,7 @@ app.on("ready", () => {
           productName: p.productName,
           price: p.sellingPrice,
           totalAmount: qtyOfOrder * p.sellingPrice,
-          profit: (p.sellingPrice - p.productCos) * qtyOfOrder,
+          profit: (p.sellingPrice - p.productCos) * qtyOfOrder
         };
         const productFlow = {
           productRef: p.productRef,
@@ -456,7 +456,7 @@ app.on("ready", () => {
           status: "Sold",
           qty: qtyOfOrder,
           remaining: onstock,
-          date: new Date(),
+          date: new Date()
         };
 
         const newProductFlow = new ProductFlow(productFlow);
@@ -470,7 +470,7 @@ app.on("ready", () => {
           .save()
           .then((data) => {
             SalesItemized.find({
-              productRef: refIdNo,
+              productRef: refIdNo
             })
               .then((d) =>
                 mainWindow.webContents.send(
@@ -484,9 +484,139 @@ app.on("ready", () => {
       });
 
       const productUpdated = await Product.findOneAndUpdate(
-        { barcode: args },
+        { _id: args },
         { $set: { StockRemaining: onstock, sold: soldOnProduct } }
       );
+    }
+  });
+
+  ipcMain.on("send-qty-of-order", (e, args) => {
+    qtyOfOrder = args;
+  });
+
+  // New punch by barcode is here.
+  ipcMain.on("find-barcode", async (e, args) => {
+    const product = await Product.find({ barcode: args });
+
+    console.log("finding using barcode: " + product);
+
+    if (product.length == 0) {
+      console.log("product not find!.");
+      e.reply("barcord-not-found", "barcord not found");
+    } else {
+      console.log(`QTY of order: ${qtyOfOrder}`);
+      console.log(`Sales itemized ref id: ${refIdNo}`);
+
+      const findedProduct = await SalesItemized.findOne({
+        productRef: refIdNo
+      });
+
+      if (findedProduct) {
+        console.log("product find on current sales" + findedProduct);
+
+        // add new flow
+        product.map(async (p) => {
+          onstock = p.StockRemaining - qtyOfOrder;
+
+          const productFlow = {
+            productRef: p.productRef,
+            productName: p.productName,
+            status: "Update sales itemized quantity and Sold",
+            qty: qtyOfOrder,
+            remaining: onstock,
+            date: new Date()
+          };
+
+          const newProductFlow = new ProductFlow(productFlow);
+          newProductFlow
+            .save()
+            .then((data) => console.log(data))
+            .catch((e) => console.log(e));
+
+          const newQuantity =
+            parseInt(findedProduct.quantityOfOrder) + parseInt(qtyOfOrder);
+          console.log(newQuantity);
+
+          await SalesItemized.findOneAndUpdate(
+            { productRef: refIdNo },
+            {
+              quantityOfOrder: newQuantity,
+              totalAmount: parseInt(newQuantity) * parseInt(findedProduct.price)
+            }
+          );
+          console.log("sales itemized is now updated");
+          SalesItemized.find({
+            productRef: refIdNo
+          })
+            .then((d) =>
+              mainWindow.webContents.send(
+                "updated-list-of-order",
+                JSON.stringify(d)
+              )
+            )
+            .catch((e) => console.log(e));
+        });
+        await Product.findOneAndUpdate(
+          { barcode: args },
+          { $set: { StockRemaining: onstock, sold: soldOnProduct } }
+        )
+          .then(() => {
+            console.log("product updated on new quantity in list");
+          })
+          .catch((error) => {
+            console.log("Error updating product on list", error);
+          });
+      } else {
+        product.map((p) => {
+          onstock = p.StockRemaining - qtyOfOrder;
+          soldOnProduct = p.sold + parseInt(qtyOfOrder);
+
+          const sales = {
+            productRef: refIdNo,
+            quantityOfOrder: qtyOfOrder,
+            productName: p.productName,
+            price: p.sellingPrice,
+            totalAmount: qtyOfOrder * p.sellingPrice,
+            profit: (p.sellingPrice - p.productCos) * qtyOfOrder
+          };
+          const productFlow = {
+            productRef: p.productRef,
+            productName: p.productName,
+            status: "Sold",
+            qty: qtyOfOrder,
+            remaining: onstock,
+            date: new Date()
+          };
+
+          const newProductFlow = new ProductFlow(productFlow);
+          newProductFlow
+            .save()
+            .then((data) => console.log(data))
+            .catch((e) => console.log(e));
+
+          const newSale = new SalesItemized(sales);
+          newSale
+            .save()
+            .then((data) => {
+              SalesItemized.find({
+                productRef: refIdNo
+              })
+                .then((d) =>
+                  mainWindow.webContents.send(
+                    "updated-list-of-order",
+                    JSON.stringify(d)
+                  )
+                )
+                .catch((e) => console.log(e));
+            })
+            .catch((e) => console.log(e));
+        });
+
+        const productUpdated = await Product.findOneAndUpdate(
+          { barcode: args },
+          { $set: { StockRemaining: onstock, sold: soldOnProduct } }
+        );
+      }
     }
   });
   // Show windows
@@ -532,11 +662,11 @@ app.on("ready", () => {
       status: "Pullout",
       qty: pulloutQTY,
       remaining: newStock,
-      date: args.date,
+      date: args.date
     };
 
     const updatedProduct = await Product.findByIdAndUpdate(args.productID, {
-      $set: { pullout: newPulloutQty, StockRemaining: newStock },
+      $set: { pullout: newPulloutQty, StockRemaining: newStock }
     });
 
     const newProductFlow = new ProductFlow(productFlow);
@@ -628,7 +758,7 @@ app.on("ready", () => {
       const productsInfo = await Product.find();
       const allData = {
         totalSalesData: totalSales,
-        totalProductInfo: productsInfo,
+        totalProductInfo: productsInfo
       };
       e.reply("all-data-report", JSON.stringify(allData));
     }
@@ -637,7 +767,7 @@ app.on("ready", () => {
   ipcMain.on("get-sales", async (e, args) => {
     console.log(args);
     const sales = await SaleRecord.find({
-      dateTransact: { $gte: args.beg, $lte: args.end },
+      dateTransact: { $gte: args.beg, $lte: args.end }
     });
     e.reply("sales-data", JSON.stringify(sales));
   });
@@ -704,8 +834,8 @@ app.on("ready", () => {
     const filterdFundTrasactions = await GetFundTransaction.find({
       dateTransact: {
         $gte: args.beg,
-        $lte: args.end,
-      },
+        $lte: args.end
+      }
     });
 
     e.reply("filterdFundTrasactions", JSON.stringify(filterdFundTrasactions));
@@ -737,7 +867,7 @@ app.on("ready", () => {
     });
 
     const updatedList = await SalesItemized.find({
-      productRef: args.currentRef,
+      productRef: args.currentRef
     });
 
     const productUpdated = await Product.findOneAndUpdate(
@@ -753,7 +883,7 @@ app.on("ready", () => {
       status: "Void Product",
       qty: voidQty,
       remaining: onstock,
-      date: new Date(),
+      date: new Date()
     };
 
     const voidProduct = new ProductFlow(productFlow);
@@ -773,7 +903,7 @@ app.on("ready", () => {
       status: "New Entry",
       qty: args.startStock,
       remaining: args.startStock,
-      date: new Date(),
+      date: new Date()
     };
     const newProduct = new Product(args);
     const newProductFlow = new ProductFlow(productFlow);
@@ -788,7 +918,7 @@ app.on("ready", () => {
   ipcMain.on("get-pullout-record", async (e, args) => {
     console.log(args);
     const filteredPulloutRecord = await Pullout.find({
-      date: { $gte: args.beg, $lte: args.end },
+      date: { $gte: args.beg, $lte: args.end }
     });
     // const filteredPulloutRecord = await Pullout.find();
 
@@ -816,8 +946,8 @@ app.on("ready", () => {
         nodeIntegration: true,
         nativeWindowOpen: false,
         contextIsolation: false,
-        enableRemoteModule: true,
-      },
+        enableRemoteModule: true
+      }
     });
     win.loadFile("./src/html/getFund.html");
   };
@@ -832,8 +962,8 @@ app.on("ready", () => {
         nodeIntegration: true,
         nativeWindowOpen: false,
         contextIsolation: false,
-        enableRemoteModule: true,
-      },
+        enableRemoteModule: true
+      }
     });
     win.loadFile("./src/html/fundHistory.html");
   };
@@ -848,8 +978,8 @@ app.on("ready", () => {
         nodeIntegration: true,
         nativeWindowOpen: false,
         contextIsolation: false,
-        enableRemoteModule: true,
-      },
+        enableRemoteModule: true
+      }
     });
     win.loadFile("./src/html/pulloutRecord.html");
   };
@@ -875,7 +1005,7 @@ app.on("ready", () => {
       printerName: "POS58 Printer", // printerName: string, check with webContent.getPrinters()
       timeOutPerLine: 400,
       pageSize: { height: 301000, width: 48000 }, // page size
-      silent: true,
+      silent: true
     };
     console.log("printing ...");
     PosPrinter.print(data, options)
@@ -892,7 +1022,7 @@ app.on("ready", () => {
       printerName: "POS-58", // printerName: string, check with webContent.getPrinters()
       timeOutPerLine: 400,
       pageSize: { height: 301000, width: 71000 }, // page size
-      silent: true,
+      silent: true
     };
     console.log("printing ...");
     PosPrinter.print(data, options)
@@ -918,7 +1048,7 @@ app.on("ready", () => {
       printerName: "POS58 Printer", // printerName: string, check with webContent.getPrinters()
       timeOutPerLine: 400,
       pageSize: { height: 301000, width: 48000 }, // page size
-      silent: true,
+      silent: true
     };
     console.log("printing records...");
     PosPrinter.print(data, options)
@@ -936,7 +1066,7 @@ app.on("ready", () => {
       printerName: "POS58 Printer", // printerName: string, check with webContent.getPrinters()
       timeOutPerLine: 400,
       pageSize: { height: 301000, width: 48000 }, // page size
-      silent: true,
+      silent: true
     };
     console.log("printing bills counter...");
     PosPrinter.print(data, options)
@@ -966,8 +1096,8 @@ app.on("ready", () => {
           productName: data.newProductName,
           productExpiry: data.newProductExpiry,
           productCos: data.newProductCos,
-          sellingPrice: data.newSellingPrice,
-        },
+          sellingPrice: data.newSellingPrice
+        }
       }
     );
 
@@ -983,8 +1113,8 @@ app.on("ready", () => {
         nodeIntegration: true,
         nativeWindowOpen: false,
         contextIsolation: false,
-        enableRemoteModule: true,
-      },
+        enableRemoteModule: true
+      }
     });
     mainWindow.loadFile("./src/html/index.html");
   });
@@ -1005,8 +1135,8 @@ ipcMain.on("show-bills-counter", (e, args) => {
       nodeIntegration: true,
       nativeWindowOpen: false,
       contextIsolation: false,
-      enableRemoteModule: true,
-    },
+      enableRemoteModule: true
+    }
   });
   mainWindow.loadFile("./src/html/billsCounter.html");
 });

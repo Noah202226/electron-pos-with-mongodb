@@ -1,6 +1,6 @@
 const dayJS = require("dayjs");
 const { ipcRenderer, dialog } = require("electron");
-
+const ExcelJS = require("exceljs");
 const dateTime = document.querySelector("#dateTime");
 const salesRecordTable = document.querySelector("#salesRecordTable");
 const exit = document.querySelector("#exit");
@@ -23,19 +23,135 @@ const overAllTotal = document.querySelector("#overAllTotal");
 let totalSales;
 let totalRemainingValue;
 
+const handleExportToExcel = () => {
+  try {
+    // Create a new workbook
+    const workbook = new ExcelJS.Workbook();
+    const sheet = workbook.addWorksheet("SALES", {
+      properties: { tabColor: { argb: "0CC2000" } }
+    });
+
+    const capitalizeData = (data) => {
+      const capitalizedDataArr = [];
+      data.map((text) => {
+        // Split the text into an array of words
+        var words = text.split(" ");
+
+        // Capitalize the first letter of each word
+        var capitalizedWords = words.map(function (word) {
+          return word.charAt(0).toUpperCase() + word.slice(1);
+        });
+
+        // Join the capitalized words back into a single string
+        var capitalizedText = capitalizedWords.join(" ");
+
+        // Return the capitalized text
+
+        capitalizedDataArr.push(capitalizedText);
+      });
+
+      return capitalizedDataArr;
+    };
+
+    // Exclude fields (_id and __v) when extracting column headers
+    const headers = Object.keys(sales[0]).filter(
+      (key) => !["_id", "__v"].includes(key)
+    );
+
+    const capitalizeHeaders = capitalizeData(headers);
+
+    // Exclude fields (_id and __v) when mapping data objects to arrays of values
+
+    const formattedRows = sales.map((row) => {
+      const { dateTransact, ...rest } = row;
+      const date = new Date(dateTransact);
+      const formattedDate = date.toLocaleDateString();
+      return { dateTransact: formattedDate, ...rest };
+    });
+    const rows = formattedRows.map(({ _id, __v, ...obj }) =>
+      Object.values(obj)
+    );
+
+    // Title App
+    const excelSalesTitle = sheet.getCell("A1");
+    excelSalesTitle.font = { bold: true, size: 18 };
+    excelSalesTitle.value = "Dental Clinic Sales";
+
+    // Data computation
+    const dateRange = sheet.getCell("A2");
+    dateRange.font = { bold: true, size: 14 };
+    dateRange.value = "Date Range:";
+    const dateRangeFirst = sheet.getCell("B2");
+    dateRangeFirst.font = { bold: true, size: 13, italic: true };
+    dateRangeFirst.value = `${firstDay} to ${Date.now()}`;
+
+    const totalSalesLabel = sheet.getCell("D2");
+    totalSalesLabel.font = { bold: true, size: 14 };
+    totalSalesLabel.value = "Total Sales:";
+    const totalSales = sheet.getCell("E2");
+    totalSales.font = { bold: true, size: 13, italic: true };
+    totalSales.value = sales.reduce((a, b) => a + parseInt(b.totalAmount), 0);
+
+    const headerRow = sheet.addRow(capitalizeHeaders);
+
+    headerRow.font = { bold: true };
+
+    sheet.columns[0].width = 50;
+    sheet.columns[1].width = 30;
+    sheet.columns[2].width = 30;
+    sheet.columns[3].width = 30;
+    sheet.columns[4].width = 20;
+
+    rows.forEach((rowData) => {
+      sheet.addRow(rowData);
+    });
+
+    // Generate the Excel file
+    workbook.xlsx
+      .writeBuffer()
+      .then((buffer) => {
+        if (buffer.byteLength == 0) return;
+
+        // setIsSaving(true);
+        const blob = new Blob([buffer], {
+          type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = `Edz Convinence data - ${new Date(
+          Date.now()
+        ).toLocaleDateString()} to ${new Date(
+          Date.now()
+        ).toLocaleDateString()}.xlsx`;
+        link.click();
+
+        console.log("saving...");
+      })
+      .catch((error) => {
+        console.log(error);
+        // toast.error("Error saving excel file. =>" + error.message, {
+        //   position: "top-center",
+        //   containerId: "transactionsNofity"
+        // });
+      });
+  } catch (e) {
+    console.log(e);
+    // toast.error("Error saving file. Select range with sales report to export", {
+    //   position: "top-center",
+    //   containerId: "transactionsNofity"
+    // });
+  }
+};
+
 exportButton.addEventListener("click", () => {
   console.log("exporting", begDate.value);
+  handleExportToExcel();
   // ipcRenderer.send("exporting", {
   //   begDate: begDate.value,
   //   endDate: endDate.value,
   //   totalSales,
   // });
-
-  Notification.requestPermission().then(() => {
-    new Notification("Sample Notification Title 1", {
-      body: "Sample Notification data",
-    });
-  });
 });
 
 getFund.addEventListener("click", () => {
@@ -126,7 +242,7 @@ const renderOrderlist = () => {
 const getSales = () => {
   const date = {
     beg: begDate.value + " 00:00:00",
-    end: endDate.value + " 23:59:59",
+    end: endDate.value + " 23:59:59"
   };
   console.log(begDate.value);
   console.log(endDate.value);
@@ -136,15 +252,15 @@ const getTotalSalesAndRemaingValueOfProduct = () => {
   ipcRenderer.send("get-all-sales-and-remaining-value-of-products");
 };
 
+let now = new Date();
+let date = new Date();
+let firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
 // Events
 addEventListener("DOMContentLoaded", () => {
   renderDateTime();
 
-  let now = new Date();
   now.setMinutes(now.getMinutes() - now.getTimezoneOffset() + 1);
 
-  let date = new Date();
-  let firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
   console.log(firstDay);
 
   // endDate.value = now.toISOString().slice(0, 16);
@@ -164,7 +280,7 @@ exit.addEventListener("click", () => {
 filterFlow.addEventListener("click", () => {
   const date = {
     beg: begDate.value + " 00:00:00",
-    end: endDate.value + " 11:59:59",
+    end: endDate.value + " 23:59:59"
   };
   console.log(date.beg);
   console.log(date.end);

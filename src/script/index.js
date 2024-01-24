@@ -48,20 +48,20 @@ openDrawer.addEventListener("click", () => {
       css: {
         "font-family": "Arial Rounded MT",
         "font-weight": "600",
-        "font-size": "24px",
-      },
+        "font-size": "24px"
+      }
     },
     {
       type: "text",
       value: "---------------------",
-      css: { "font-family": "Arial Rounded MT", "font-size": "16px" },
+      css: { "font-family": "Arial Rounded MT", "font-size": "16px" }
     },
     {
       type: "text", // 'text' | 'barCode' | 'qrCode' | 'image' | 'table
       value: "OPEN DRAWER",
       style: `text-align:center;`,
-      css: { "font-weight": "900", "font-size": "26px" },
-    },
+      css: { "font-weight": "900", "font-size": "26px" }
+    }
   ];
 
   ipcRenderer.send("open-drawer", JSON.stringify(data));
@@ -96,7 +96,7 @@ const voidItem = (id, qty) => {
   const voidData = {
     prodId: id,
     currentRef: idrefNo.innerHTML,
-    qtyOfOrder: qty,
+    qtyOfOrder: qty
   };
   console.log(voidData);
   ipcRenderer.send("void-product", voidData);
@@ -173,7 +173,7 @@ showProducts.addEventListener("click", () => {
   } else {
     const saleinfo = {
       qtyOfOrder: qtyOfOrderInput.value,
-      refIdNo: idrefNo.innerHTML,
+      refIdNo: idrefNo.innerHTML
     };
     ipcRenderer.send("show-products", saleinfo);
   }
@@ -194,7 +194,7 @@ payoutBtn.addEventListener("click", () => {
       saleRef: idrefNo.innerHTML,
       dateTransact: new Date(),
       totalAmount: totalAmountInput.value,
-      profit: totalProfitInput.value,
+      profit: totalProfitInput.value
     };
     // Orders Data
     const ordersLength = salesListTable.rows.length;
@@ -224,7 +224,7 @@ payoutBtn.addEventListener("click", () => {
     ipcRenderer.send("show-payout-form", saleData);
     ipcRenderer.send("orders-data", JSON.stringify(orders));
   } else {
-    console.log("no transactions");
+    ipcRenderer.send("show-notification", "Nothing to payout.");
   }
 });
 
@@ -239,6 +239,7 @@ ipcRenderer.on("ref-data", (e, args) => {
   });
 
   ipcRenderer.send("get-sales-by-ref", idrefNo.innerHTML);
+  barcode.focus();
 });
 
 ipcRenderer.on("sales-by-ref", (e, args) => {

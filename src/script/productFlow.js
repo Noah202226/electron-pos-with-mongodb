@@ -33,7 +33,7 @@ const renderProductFlow = () => {
                               <td>${data.qty}</td>
                               <td>${data.remaining}</td>
                               <td>${dayjs(data.date).format(
-                                "MMMM-DD:YYYY HH:MM:ss:A"
+                                "MMMM-DD:YYYY hh:mm:ss:a"
                               )}</td>
                           </tr>`;
   });
@@ -56,7 +56,7 @@ updateproductBtn.addEventListener("click", (e) => {
     newProductName: productName.value,
     newProductExpiry: expiry.value,
     newProductCos: productCos.value,
-    newSellingPrice: sellingPrice.value,
+    newSellingPrice: sellingPrice.value
   };
   ipcRenderer.send("update-product", JSON.stringify(newProductInfo));
 
