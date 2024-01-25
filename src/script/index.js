@@ -258,3 +258,7 @@ ipcRenderer.on("updated-list-of-order", (e, args) => {
 ipcRenderer.on("barcord-not-found", (e, args) => {
   ipcRenderer.send("show-notification", "Barcode of product not found.");
 });
+
+ipcRenderer.on("send-shorcut", (e, args) => {
+  console.log("recieved from main.");
+});

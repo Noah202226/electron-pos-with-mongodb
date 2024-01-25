@@ -9,7 +9,7 @@ const totalAmount = document.querySelector("#totalAmount");
 const totalProfit = document.querySelector("#totalProfit");
 const totalDays = document.querySelector("#totalDays");
 
-const getFund = document.querySelector("#getFund");
+// const getFund = document.querySelector("#getFund");
 
 const begDate = document.querySelector("#begDate");
 const endDate = document.querySelector("#endDate");
@@ -75,7 +75,7 @@ const handleExportToExcel = () => {
     // Title App
     const excelSalesTitle = sheet.getCell("A1");
     excelSalesTitle.font = { bold: true, size: 18 };
-    excelSalesTitle.value = "Dental Clinic Sales";
+    excelSalesTitle.value = "Edz Conveniece Store Sales Reports";
 
     // Data computation
     const dateRange = sheet.getCell("A2");
@@ -83,14 +83,24 @@ const handleExportToExcel = () => {
     dateRange.value = "Date Range:";
     const dateRangeFirst = sheet.getCell("B2");
     dateRangeFirst.font = { bold: true, size: 13, italic: true };
-    dateRangeFirst.value = `${firstDay} to ${Date.now()}`;
+    // dateRangeFirst.value = `${firstDay} to ${Date.now()}`;
+    dateRangeFirst.value = `${dayJS(firstDay).format("YYYY-MM-DD")} to ${dayJS(
+      new Date()
+    ).format("YYYY-MM-DD")}`;
 
-    const totalSalesLabel = sheet.getCell("D2");
+    const totalSalesLabel = sheet.getCell("A3");
     totalSalesLabel.font = { bold: true, size: 14 };
     totalSalesLabel.value = "Total Sales:";
-    const totalSales = sheet.getCell("E2");
+    const totalSales = sheet.getCell("B3");
     totalSales.font = { bold: true, size: 13, italic: true };
     totalSales.value = sales.reduce((a, b) => a + parseInt(b.totalAmount), 0);
+
+    const totalProfitLabel = sheet.getCell("C3");
+    totalProfitLabel.font = { bold: true, size: 14 };
+    totalProfitLabel.value = "Total Profit:";
+    const totalProfit = sheet.getCell("D3");
+    totalProfit.font = { bold: true, size: 13, italic: true };
+    totalProfit.value = sales.reduce((a, b) => a + parseInt(b.profit), 0);
 
     const headerRow = sheet.addRow(capitalizeHeaders);
 
@@ -100,7 +110,7 @@ const handleExportToExcel = () => {
     sheet.columns[1].width = 30;
     sheet.columns[2].width = 30;
     sheet.columns[3].width = 30;
-    sheet.columns[4].width = 20;
+    // sheet.columns[4].width = 20;
 
     rows.forEach((rowData) => {
       sheet.addRow(rowData);
@@ -119,11 +129,9 @@ const handleExportToExcel = () => {
         const url = URL.createObjectURL(blob);
         const link = document.createElement("a");
         link.href = url;
-        link.download = `Edz Convinence data - ${new Date(
-          Date.now()
-        ).toLocaleDateString()} to ${new Date(
-          Date.now()
-        ).toLocaleDateString()}.xlsx`;
+        link.download = `Edz Convinence data - ${dayJS(firstDay).format(
+          "YYYY-MM-DD"
+        )} to ${dayJS(new Date()).format("YYYY-MM-DD")}.xlsx`;
         link.click();
 
         console.log("saving...");
@@ -154,18 +162,19 @@ exportButton.addEventListener("click", () => {
   // });
 });
 
-getFund.addEventListener("click", () => {
-  console.log("getting fund form");
+// getFund.addEventListener("click", () => {
+//   console.log("getting fund form");
 
-  ipcRenderer.send("show-getFund-window");
+//   ipcRenderer.send("show-getFund-window");
 
-  window.close();
-});
+//   window.close();
+// });
 
 // Global Variables
 let sales;
 const showOrderList = (ref) => {
-  ipcRenderer.send("show-orderlist-ref", ref);
+  // ipcRenderer.send("show-orderlist-ref", ref);
+  ipcRenderer.send("show-viewItemizedSales", ref);
 };
 
 // Functions

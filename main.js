@@ -1,4 +1,11 @@
-const { app, BrowserWindow, ipcMain, dialog, shell } = require("electron");
+const {
+  app,
+  BrowserWindow,
+  ipcMain,
+  dialog,
+  shell,
+  globalShortcut
+} = require("electron");
 
 const { PosPrinter } = require("electron-pos-printer");
 const dayJs = require("dayjs");
@@ -202,8 +209,6 @@ app.on("ready", () => {
     parent: mainWindow
   });
 
-  console.log(mainWindow.webContents.getPrinters());
-
   mainWindow.loadFile("./src/html/index.html");
   loginWindow.loadFile("./src/html/login.html");
 
@@ -220,6 +225,13 @@ app.on("ready", () => {
         contextIsolation: false,
         enableRemoteModule: true
       }
+    });
+    // Register a global shortcut
+    globalShortcut.register("Escape", () => {
+      console.log("Global shortcut activated");
+      // Perform the desired action here
+      win.close();
+      globalShortcut.unregister("Escape");
     });
     win.loadFile("./src/html/newProduct.html");
   };
@@ -299,6 +311,11 @@ app.on("ready", () => {
         enableRemoteModule: true
       }
     });
+    // Register a global shortcut
+    globalShortcut.register("Escape", () => {
+      console.log("Global shortcut activated");
+      // Perform the desired action here
+    });
     win.loadFile("./src/html/addProduct.html");
   };
   const productFlowWindow = () => {
@@ -333,8 +350,25 @@ app.on("ready", () => {
     });
     win.loadFile("./src/html/pulloutForm.html");
   };
-  // IPC
 
+  const viewSalesItemized = () => {
+    const win = new BrowserWindow({
+      width: 800,
+      height: 600,
+      frame: false,
+      modal: true,
+      parent: mainWindow,
+      webPreferences: {
+        nodeIntegration: true,
+        nativeWindowOpen: false,
+        contextIsolation: false,
+        enableRemoteModule: true
+      }
+    });
+    win.loadFile("./src/html/viewSalesItemized.html");
+  };
+
+  // IPC
   ipcMain.on("check-user", async (e, args) => {
     const auth = await User.find({ uname: args.uname, upass: args.upass });
     if (auth.length == 0) {
@@ -375,15 +409,19 @@ app.on("ready", () => {
   ipcMain.on("find-product", async (e, args) => {
     const product = await Product.find({ _id: args });
 
-    console.log(`QTY of order: ${qtyOfOrder}`);
-    console.log(`Sales itemized ref id: ${refIdNo}`);
+    // console.log(args);
+    // console.log(product[0].productName);
+    // console.log(`QTY of order: ${qtyOfOrder}`);
+    // console.log(`Sales itemized ref id: ${refIdNo}`);
 
     const findedProduct = await SalesItemized.findOne({
-      productRef: refIdNo
+      productRef: refIdNo,
+      productName: product[0].productName
     });
+    // console.log("Product: ", findedProduct);
 
     if (findedProduct) {
-      console.log("product find on current sales" + findedProduct);
+      // console.log("product find on current sales" + findedProduct);
 
       // add new flow
       product.map(async (p) => {
@@ -409,7 +447,7 @@ app.on("ready", () => {
         console.log(newQuantity);
 
         await SalesItemized.findOneAndUpdate(
-          { productRef: refIdNo },
+          { productRef: refIdNo, productName: product[0].productName },
           {
             quantityOfOrder: newQuantity,
             totalAmount: parseInt(newQuantity) * parseInt(findedProduct.price)
@@ -508,7 +546,8 @@ app.on("ready", () => {
       console.log(`Sales itemized ref id: ${refIdNo}`);
 
       const findedProduct = await SalesItemized.findOne({
-        productRef: refIdNo
+        productRef: refIdNo,
+        productName: product[0].productName
       });
 
       if (findedProduct) {
@@ -538,7 +577,7 @@ app.on("ready", () => {
           console.log(newQuantity);
 
           await SalesItemized.findOneAndUpdate(
-            { productRef: refIdNo },
+            { productRef: refIdNo, productName: product[0].productName },
             {
               quantityOfOrder: newQuantity,
               totalAmount: parseInt(newQuantity) * parseInt(findedProduct.price)
@@ -622,6 +661,17 @@ app.on("ready", () => {
   // Show windows
   ipcMain.on("show-newProduct-form", (e, args) => {
     newProductWindow();
+  });
+  let itemizedRef;
+  ipcMain.on("show-viewItemizedSales", (e, args) => {
+    console.log(args);
+    itemizedRef = 0;
+
+    itemizedRef = args;
+    viewSalesItemized();
+  });
+  ipcMain.on("get-salesItemized-ref", (e, args) => {
+    e.reply("itemized-ref", itemizedRef);
   });
 
   // Show pullout form
@@ -1124,6 +1174,8 @@ app.on("ready", () => {
   });
   ipcMain.on("exit-app", () => {
     app.quit();
+
+    globalShortcut.unregisterAll();
   });
 });
 
