@@ -6,27 +6,112 @@
     <title>Document</title>
     <style>
       body {
-        margin: 0;
+        margin: 1rem;
         padding: 0;
         font-family: "Arial Rounded MT";
         background-color: #4f99fa;
       }
-    </style>
+      #closeBtn {
+        position: absolute;
+        margin: 1rem;
+        padding: 0.5em;
+        right: 0;
+        top: 0;
+        outline: none;
+        border: none;
+        cursor: pointer;
+      }
+      #closeBtn:hover {
+        background-color: #0a264b;
+        color: aliceblue;
+      }
 
-    <script>
+      table {
+        margin-top: 20px;
+        padding: 10px;
+        border-collapse: collapse;
+        background-color: rgb(126, 216, 228);
+        width: 100%;
+        color: rgb(49, 86, 165);
+      }
+      th,
+      td {
+        border: 1px solid blueviolet;
+        text-align: center;
+        padding: 10px;
+        margin: 5px;
+        width: 100%px;
+      }
+      tr:nth-child(even) {
+        background-color: darkgrey;
+      }
+    </style>
+  </head>
+  <body>
+    <button id="closeBtn">Close</button>
+    <h1 id="sales-ref">Sales Itemized on reference:</h1>
+
+    <table id="itemsTable"></table>
+
+    <p id="totalAmount"></p>
+    <p id="totalProfit"></p>
+
+    <script defer>
       const { ipcRenderer } = require("electron");
+
+      const closeBtn = document.querySelector("#closeBtn");
+      const itemsTable = document.querySelector("#itemsTable");
+      const totalAmount = document.querySelector("#totalAmount");
+      const totalProfit = document.querySelector("#totalProfit");
+
       addEventListener("DOMContentLoaded", () => {
         ipcRenderer.send("get-salesItemized-ref", "");
         console.log("getting sales itemized ref");
+      });
+      closeBtn.addEventListener("click", () => {
+        window.close();
+        console.log("closing ...");
       });
 
       ipcRenderer.on("itemized-ref", (e, args) => {
         console.log(args);
         document.querySelector("#sales-ref").innerHTML += ` ${args}`;
+
+        ipcRenderer.send("getting-item-in-ref", args);
+      });
+      ipcRenderer.on("items-on-ref", (e, args) => {
+        const items = JSON.parse(args);
+        console.log(items);
+        itemsTable.innerHTML = "";
+        itemsTable.innerHTML = `<tr>
+                              
+                              <th>QTY</th>
+                              <th>ProductName</th>
+                              <th>Price</th>
+                              <th>Total</th>
+                              <th>Profit</th>
+                            </tr>`;
+        items.forEach((item) => {
+          itemsTable.innerHTML += `<tr>
+
+                                
+                                <td>${item.quantityOfOrder}</td>
+                                <td>${item.productName}</td>
+                                <td>${item.price}</td>
+                                <td>${item.totalAmount}</td>
+                                <td>${item.profit}</td>
+    </tr>`;
+        });
+
+        totalAmount.innerHTML = `Total Amount: ${items.reduce(
+          (a, c) => a + c.totalAmount,
+          0
+        )}`;
+        totalProfit.innerHTML = `Total Amount: ${items.reduce(
+          (a, c) => a + c.profit,
+          0
+        )}`;
       });
     </script>
-  </head>
-  <body>
-    <h1 id="sales-ref">Sales Itemized on reference:</h1>
   </body>
 </html>

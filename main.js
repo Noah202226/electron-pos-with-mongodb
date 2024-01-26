@@ -673,6 +673,12 @@ app.on("ready", () => {
   ipcMain.on("get-salesItemized-ref", (e, args) => {
     e.reply("itemized-ref", itemizedRef);
   });
+  ipcMain.on("getting-item-in-ref", async (e, args) => {
+    const items = await SalesItemized.find({ productRef: args });
+    console.log(items);
+
+    e.reply("items-on-ref", JSON.stringify(items));
+  });
 
   // Show pullout form
   let pulloutID;
